@@ -1,7 +1,7 @@
-﻿// Carrusel "Â¿Sos docente alfabetizador? Sumate y recibÃ­ todo esto gratis",
+// Carrusel "¿Sos docente alfabetizador? Sumate y recibí todo esto gratis",
 // alimentado desde la tabla nueva "recursos_destacados" (ver sql/). Si la
-// tabla no existe todavÃ­a, estÃ¡ vacÃ­a, o Supabase no responde, se usa un
-// contenido de reserva con la informaciÃ³n real que ya existÃ­a en el sitio
+// tabla no existe todavía, está vacía, o Supabase no responde, se usa un
+// contenido de reserva con la información real que ya existía en el sitio
 // (nunca se inventan recursos nuevos).
 (function () {
     'use strict';
@@ -9,9 +9,9 @@
     var FALLBACK = [
         { titulo: 'Cuadernillos y materiales', descripcion: 'Cuadernillos y materiales para todos tus alumnos.', imagen_url: 'imagenes/imagen%20(12).jpg' },
         { titulo: 'Juegos de lectura', descripcion: 'Juegos de cartas para reforzar habilidades de lectura de forma divertida.', imagen_url: 'imagenes/imagen%20(4).jpg' },
-        { titulo: 'GuÃ­a pedagÃ³gica', descripcion: 'GuÃ­a pedagÃ³gica detallada para acompaÃ±ar cada paso del proceso.', imagen_url: 'imagenes/imagen%20(5).jpg' },
-        { titulo: 'Cursos online', descripcion: 'Acceso completo a cursos online asincrÃ³nicos y capacitaciones.', imagen_url: 'imagenes/imagen%20(6).jpg' },
-        { titulo: 'Foro exclusivo', descripcion: 'ParticipaciÃ³n con voto en un foro exclusivo de docentes e investigadores.', imagen_url: 'imagenes/imagen%20(7).jpg' },
+        { titulo: 'Guía pedagógica', descripcion: 'Guía pedagógica detallada para acompañar cada paso del proceso.', imagen_url: 'imagenes/imagen%20(5).jpg' },
+        { titulo: 'Cursos online', descripcion: 'Acceso completo a cursos online asincrónicos y capacitaciones.', imagen_url: 'imagenes/imagen%20(6).jpg' },
+        { titulo: 'Foro exclusivo', descripcion: 'Participación con voto en un foro exclusivo de docentes e investigadores.', imagen_url: 'imagenes/imagen%20(7).jpg' },
         { titulo: 'Eventos presenciales', descripcion: 'Eventos presenciales con especialistas nacionales e internacionales.', imagen_url: 'imagenes/imagen%20(8).jpg' }
     ];
 
@@ -62,7 +62,7 @@
             enlace.className = 'ofrecemos__tarjeta-cta';
             // Columna real: "texto_boton" (verificado con information_schema.columns),
             // no "cta_texto".
-            enlace.textContent = recurso.texto_boton && recurso.texto_boton.trim() ? recurso.texto_boton : 'Ver mÃ¡s';
+            enlace.textContent = recurso.texto_boton && recurso.texto_boton.trim() ? recurso.texto_boton : 'Ver más';
             cuerpo.appendChild(enlace);
         }
 
@@ -124,7 +124,7 @@
             var recursos = resp.data || [];
             renderizar(recursos.length > 0 ? recursos : FALLBACK);
         } catch (err) {
-            console.warn('No se pudo cargar "QuÃ© ofrecemos" desde Supabase, se usa el contenido de reserva:', err);
+            console.warn('No se pudo cargar "Qué ofrecemos" desde Supabase, se usa el contenido de reserva:', err);
             renderizar(FALLBACK);
         } finally {
             iniciarNavegacion();
@@ -137,4 +137,3 @@
         cargarOfrecemos();
     }
 })();
-

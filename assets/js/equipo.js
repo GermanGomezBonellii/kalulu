@@ -1,15 +1,15 @@
-﻿// SecciÃ³n "QuiÃ©nes somos" â€” grilla de tarjetas del equipo.
+// Sección "Quiénes somos" — grilla de tarjetas del equipo.
 //
 // Fuente de verdad: la tabla "equipo" en Supabase (nombre, descripcion,
-// imagen_url, orden, publicada). La secciÃ³n NUNCA queda hardcodeada en el
-// HTML â€” este script es siempre el que dibuja la grilla, ya sea con datos
-// reales de Supabase o, si la tabla todavÃ­a no existe / estÃ¡ vacÃ­a / hay
-// un error, con el mismo contenido de reserva que ya tenÃ­a el sitio (los
+// imagen_url, orden, publicada). La sección NUNCA queda hardcodeada en el
+// HTML — este script es siempre el que dibuja la grilla, ya sea con datos
+// reales de Supabase o, si la tabla todavía no existe / está vacía / hay
+// un error, con el mismo contenido de reserva que ya tenía el sitio (los
 // 8 integrantes reales, sin inventar a nadie).
 //
-// Prioridad para resolver la fotografÃ­a de cada persona:
-//   1) "imagen_url" de Supabase, si tiene un valor vÃ¡lido.
-//   2) Si es null/vacÃ­o, la imagen local ya existente para esa persona
+// Prioridad para resolver la fotografía de cada persona:
+//   1) "imagen_url" de Supabase, si tiene un valor válido.
+//   2) Si es null/vacío, la imagen local ya existente para esa persona
 //      (ver IMAGENES_EQUIPO), buscada por nombre exacto.
 //   3) Si tampoco hay una imagen local conocida, un placeholder neutro
 //      (el fondo violeta de .equipo__avatar-wrap, sin <img>).
@@ -20,18 +20,18 @@
 
     // Rutas web relativas (no rutas de Windows). "imagenes/" vive al mismo
     // nivel que "redesign/" (kalulu-main/imagenes y kalulu-main/redesign
-    // son carpetas hermanas), y este archivo lo usa una pÃ¡gina que estÃ¡ un
-    // nivel adentro de "redesign/" (redesign/index.html), asÃ­ que "imagenes/..."
-    // es lo que sube un nivel desde "redesign/" y entra a "imagenes/" â€”
-    // funciona tanto abriendo el proyecto en local como sirviÃ©ndolo desde
-    // esa misma carpeta en producciÃ³n. Nombres de archivo EXACTOS (mayÃºsculas
-    // y extensiÃ³n) tal como existen hoy en imagenes/, porque el hosting
+    // son carpetas hermanas), y este archivo lo usa una página que está un
+    // nivel adentro de "redesign/" (redesign/index.html), así que "imagenes/..."
+    // es lo que sube un nivel desde "redesign/" y entra a "imagenes/" —
+    // funciona tanto abriendo el proyecto en local como sirviéndolo desde
+    // esa misma carpeta en producción. Nombres de archivo EXACTOS (mayúsculas
+    // y extensión) tal como existen hoy en imagenes/, porque el hosting
     // final puede ser case-sensitive.
     var IMAGENES_EQUIPO = {
         'Melina Vladisauskas': 'imagenes/melina.jpg',
         'Julia Hermida': 'imagenes/julia.jpeg',
         'Cassandra Potier Watkins': 'imagenes/cassandra.jpg',
-        'AndrÃ©s Rieznik': 'imagenes/andres.jpg',
+        'Andrés Rieznik': 'imagenes/andres.jpg',
         'Stanislas Dehaene': 'imagenes/Stanislas.jpg',
         'Agripina Sanchez Menta': 'imagenes/agrispina.jpg',
         'Romina Curto': 'imagenes/Romina.jpg',
@@ -39,25 +39,25 @@
     };
 
     // object-position solo para las fotos locales donde un recorte
-    // cuadrado centrado cortarÃ­a la cara (por ejemplo, retratos verticales
-    // con la cara en el tercio superior). Todo lo que no estÃ¡ listado acÃ¡
+    // cuadrado centrado cortaría la cara (por ejemplo, retratos verticales
+    // con la cara en el tercio superior). Todo lo que no está listado acá
     // usa "center" (definido por defecto en el CSS).
     var OBJECT_POSITION_EQUIPO = {
         'Agripina Sanchez Menta': 'center 20%'
     };
 
     // Contenido de reserva: mismos 8 integrantes reales, mismos cargos,
-    // mismo orden que ya tenÃ­a el sitio. Se usa solo si Supabase no
-    // responde, la tabla "equipo" todavÃ­a no existe, o estÃ¡ vacÃ­a.
+    // mismo orden que ya tenía el sitio. Se usa solo si Supabase no
+    // responde, la tabla "equipo" todavía no existe, o está vacía.
     var FALLBACK = [
-        { nombre: 'Melina Vladisauskas', descripcion: 'Dra. en BiologÃ­a, Postdoc en Excello Lab - CollÃ¨ge de France', imagen_url: null },
-        { nombre: 'Julia Hermida', descripcion: 'Dra. en PsicologÃ­a UBA, Profesora adjunta en UNAHUR, Investigadora Asistente en CONICET', imagen_url: null },
-        { nombre: 'Cassandra Potier Watkins', descripcion: 'Investigadora en Neurociencia Cognitiva y EducaciÃ³n (CollÃ¨ge de France), Fundadora de Excello', imagen_url: null },
-        { nombre: 'AndrÃ©s Rieznik', descripcion: 'Dr. en FÃ­sica, Profesor full time en UTDT, Comunicador cientÃ­fico', imagen_url: null },
-        { nombre: 'Stanislas Dehaene', descripcion: 'Investigador en Neurociencia Cognitiva, Prof. en CollÃ¨ge de France, Dir. de NeuroSpin (INSERM-CEA)', imagen_url: null },
+        { nombre: 'Melina Vladisauskas', descripcion: 'Dra. en Biología, Postdoc en Excello Lab - Collège de France', imagen_url: null },
+        { nombre: 'Julia Hermida', descripcion: 'Dra. en Psicología UBA, Profesora adjunta en UNAHUR, Investigadora Asistente en CONICET', imagen_url: null },
+        { nombre: 'Cassandra Potier Watkins', descripcion: 'Investigadora en Neurociencia Cognitiva y Educación (Collège de France), Fundadora de Excello', imagen_url: null },
+        { nombre: 'Andrés Rieznik', descripcion: 'Dr. en Física, Profesor full time en UTDT, Comunicador científico', imagen_url: null },
+        { nombre: 'Stanislas Dehaene', descripcion: 'Investigador en Neurociencia Cognitiva, Prof. en Collège de France, Dir. de NeuroSpin (INSERM-CEA)', imagen_url: null },
         { nombre: 'Agripina Sanchez Menta', descripcion: 'Docente de primaria y Psicopedagoga', imagen_url: null },
-        { nombre: 'Romina Curto', descripcion: 'Docente y estudiante de psicopedagogÃ­a', imagen_url: null },
-        { nombre: 'Marie Lubineau', descripcion: 'Doctora en Ciencias Cognitivas, Postdoctorado en Excello Lab - CollÃ¨ge de France', imagen_url: null }
+        { nombre: 'Romina Curto', descripcion: 'Docente y estudiante de psicopedagogía', imagen_url: null },
+        { nombre: 'Marie Lubineau', descripcion: 'Doctora en Ciencias Cognitivas, Postdoctorado en Excello Lab - Collège de France', imagen_url: null }
     ];
 
     function urlValida(valor) {
@@ -137,9 +137,9 @@
             var equipo = resp.data || [];
             renderizar(equipo.length > 0 ? equipo : FALLBACK);
         } catch (err) {
-            // Tabla todavÃ­a no creada (ver sql/redesign_04_equipo.sql), sin
-            // conexiÃ³n, etc.: se usa el contenido de reserva.
-            console.warn('No se pudo cargar "QuiÃ©nes somos" desde Supabase, se usa el contenido por defecto:', err);
+            // Tabla todavía no creada (ver sql/redesign_04_equipo.sql), sin
+            // conexión, etc.: se usa el contenido de reserva.
+            console.warn('No se pudo cargar "Quiénes somos" desde Supabase, se usa el contenido por defecto:', err);
             renderizar(FALLBACK);
         }
     }
@@ -150,4 +150,3 @@
         cargarEquipo();
     }
 })();
-
