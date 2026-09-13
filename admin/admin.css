@@ -1,0 +1,437 @@
+/* Estilos propios del panel de administración de Kalulu.
+   Reutiliza la paleta violeta (#3f2a92 / #7b5cdf) de styles.css sin tocarlo. */
+
+/* Sin esto, reglas como ".admin-overlay { display: flex; }" de más abajo
+   ganan la cascada por sobre el estilo por defecto del navegador para
+   [hidden] (misma especificidad, pero el navegador es "origen" más débil
+   que nuestra propia hoja de estilos). Resultado sin este fix: el modal
+   quedaba visible tapando la pantalla aunque tuviera el atributo "hidden". */
+[hidden] {
+    display: none !important;
+}
+
+.admin-header-titulo {
+    font-weight: 500;
+    color: #3f2a92;
+    margin-right: auto;
+}
+
+.btn-admin-link {
+    background: none;
+    border: none;
+    color: #3f2a92;
+    font-weight: 500;
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 0;
+}
+
+.admin-main {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 120px 1.5rem 4rem;
+    box-sizing: border-box;
+    min-height: 100vh;
+}
+
+/* Login */
+.admin-login {
+    display: flex;
+    justify-content: center;
+    padding-top: 3rem;
+}
+
+.admin-login-form {
+    width: 100%;
+    max-width: 380px;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 2px 16px rgba(63, 42, 146, 0.15);
+    border: 1px solid #ece8f7;
+    padding: 2rem 1.75rem;
+    box-sizing: border-box;
+}
+
+.admin-login-form h1 {
+    color: #3f2a92;
+    font-size: 1.8rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.admin-login-ayuda {
+    color: #6b6480;
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Campos de formulario compartidos */
+.admin-campo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    margin-bottom: 1.1rem;
+    text-align: left;
+}
+
+.admin-campo span {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #3f2a92;
+}
+
+.admin-campo input,
+.admin-campo textarea,
+.admin-campo select {
+    font-family: inherit;
+    font-size: 1rem;
+    padding: 0.6rem 0.75rem;
+    border: 1px solid #d5cfe9;
+    border-radius: 8px;
+    box-sizing: border-box;
+    width: 100%;
+    background-color: #fff;
+}
+
+.admin-campo input:focus,
+.admin-campo textarea:focus,
+.admin-campo select:focus {
+    outline: none;
+    border-color: #7b5cdf;
+    box-shadow: 0 0 0 3px rgba(123, 92, 223, 0.2);
+}
+
+.admin-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+    font-weight: 500;
+    color: #3f2a92;
+}
+
+.admin-checkbox input {
+    width: 1.1rem;
+    height: 1.1rem;
+}
+
+/* Botones */
+.btn-admin {
+    display: inline-block;
+    background-color: #3f2a92;
+    color: #fff;
+    font-weight: bold;
+    padding: 0.7rem 1.4rem;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.2s;
+}
+
+.btn-admin:hover {
+    background-color: #2c1e6c;
+}
+
+.btn-admin:disabled {
+    background-color: #b3a8d9;
+    cursor: not-allowed;
+}
+
+.btn-admin-secundario {
+    display: inline-block;
+    background-color: #fff;
+    color: #3f2a92;
+    font-weight: bold;
+    padding: 0.65rem 1.3rem;
+    border: 2px solid #7b5cdf;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.btn-admin-secundario:hover {
+    background-color: #7b5cdf;
+    color: #fff;
+}
+
+.btn-admin-chico {
+    display: inline-block;
+    padding: 0.35rem 0.8rem;
+    border-radius: 14px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    border: 1px solid #7b5cdf;
+    background-color: #fff;
+    color: #3f2a92;
+    margin: 0.15rem;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.btn-admin-chico:hover {
+    background-color: #7b5cdf;
+    color: #fff;
+}
+
+.btn-admin-chico.peligro {
+    border-color: #a02020;
+    color: #a02020;
+}
+
+.btn-admin-chico.peligro:hover {
+    background-color: #a02020;
+    color: #fff;
+}
+
+/* Mensajes */
+.admin-mensaje {
+    text-align: center;
+    color: #3f2a92;
+    padding: 1rem 0;
+    font-size: 1rem;
+}
+
+.admin-error {
+    color: #a02020;
+    background-color: #fdecec;
+    border: 1px solid #f3c6c6;
+    border-radius: 8px;
+    padding: 0.6rem 0.9rem;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.admin-exito {
+    color: #1e7a37;
+    background-color: #e3f6e8;
+    border: 1px solid #b9e6c3;
+    border-radius: 8px;
+    padding: 0.6rem 0.9rem;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+/* Tabs (Noticias / Eventos) */
+.admin-tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid #ece8f7;
+}
+
+.admin-tab {
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    padding: 0.75rem 1.25rem;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #6b6480;
+    cursor: pointer;
+    margin-bottom: -1px;
+}
+
+.admin-tab:hover {
+    color: #3f2a92;
+}
+
+.admin-tab.activa {
+    color: #3f2a92;
+    border-bottom-color: #3f2a92;
+}
+
+/* Panel / listado */
+.admin-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.admin-panel-header h1 {
+    color: #3f2a92;
+    font-size: 2rem;
+    font-weight: 500;
+}
+
+.admin-tabla-wrap {
+    overflow-x: auto;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 2px 12px rgba(63, 42, 146, 0.1);
+    border: 1px solid #ece8f7;
+}
+
+.admin-tabla {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+}
+
+.admin-tabla th {
+    text-align: left;
+    background-color: #f4f2fb;
+    color: #3f2a92;
+    padding: 0.75rem 1rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.admin-tabla td {
+    padding: 0.75rem 1rem;
+    border-top: 1px solid #ece8f7;
+    vertical-align: middle;
+}
+
+.admin-tabla-imagen {
+    width: 60px;
+    height: 45px;
+    object-fit: cover;
+    border-radius: 6px;
+    background-color: #ece8f7;
+    display: block;
+}
+
+.admin-tabla-sin-imagen {
+    width: 60px;
+    height: 45px;
+    border-radius: 6px;
+    background-color: #ece8f7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #8a83a8;
+    font-size: 0.75rem;
+    text-align: center;
+}
+
+.admin-estado {
+    display: inline-block;
+    padding: 0.25rem 0.7rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.admin-estado.publicada {
+    background-color: #e3f6e8;
+    color: #1e7a37;
+}
+
+.admin-estado.borrador {
+    background-color: #f1f0f6;
+    color: #6b6480;
+}
+
+/* Overlay / formulario modal */
+.admin-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(63, 42, 146, 0.35);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 2rem 1rem;
+    box-sizing: border-box;
+    overflow-y: auto;
+    z-index: 2000;
+}
+
+.admin-form {
+    background: #fff;
+    border-radius: 14px;
+    padding: 2rem;
+    width: 100%;
+    max-width: 520px;
+    box-sizing: border-box;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.admin-form h2 {
+    color: #3f2a92;
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 1.25rem;
+}
+
+.admin-preview-imagen {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.admin-preview-imagen img {
+    width: 100px;
+    height: 75px;
+    object-fit: cover;
+    border-radius: 8px;
+    background-color: #ece8f7;
+}
+
+.admin-archivo-actual {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.6rem 0.9rem;
+    margin-bottom: 1.25rem;
+    background-color: #ece8f7;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    color: #3f2a92;
+}
+
+.admin-tabla-archivo {
+    display: inline-block;
+    padding: 0.25rem 0.6rem;
+    border-radius: 6px;
+    background-color: #ece8f7;
+    color: #3f2a92;
+    font-size: 0.8rem;
+    max-width: 160px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.admin-form-acciones {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: flex-end;
+    margin-top: 1.5rem;
+}
+
+/* Variante no-modal: formularios que viven directamente en el panel (ej.
+   "Home"), en vez de flotar sobre un overlay como los de Noticias/Eventos. */
+.admin-form--estatica {
+    max-width: 640px;
+    margin-top: 1.5rem;
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+    .admin-main {
+        padding: 100px 1rem 3rem;
+    }
+    .admin-panel-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .admin-tabla th,
+    .admin-tabla td {
+        padding: 0.6rem 0.6rem;
+        font-size: 0.85rem;
+    }
+    .admin-form {
+        padding: 1.5rem;
+    }
+}

@@ -1,0 +1,1281 @@
+/* =====================================================================
+   Kalulu — Rediseño / Sistema visual
+   -----------------------------------------------------------------------
+   Hoja de estilos construida desde cero para /redesign. Reutiliza el
+   lenguaje visual de Kalulu (violeta institucional, blanco, Roboto/Oswald)
+   pero no importa la hoja de estilos vieja ni sus hacks. Mobile-first:
+   cada componente se piensa primero en una columna y después se adapta
+   a pantallas más anchas con min-width.
+   ===================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+/* Auditoría tipográfica (2ª pasada): la identidad original de Kalulu (ver
+   styles.css de referencia) NUNCA usa una tipografía de títulos distinta a
+   la del texto — todo es Roboto, y la jerarquía se construye con peso
+   (300 liviano / 500 medio / 700 fuerte) y tamaño, no con una fuente
+   display como Oswald. Se saca el import de Oswald (no se usa en ningún
+   lado) y --font-heading pasa a ser Roboto, para que el resto del sitio
+   comparta ese mismo lenguaje. */
+
+/* ---------------------------------------------------------------------
+   1. Tokens (:root)
+   --------------------------------------------------------------------- */
+:root {
+  /* Color — violeta institucional de Kalulu, en escala */
+  --color-violeta-900: #241a4d;
+  --color-violeta-800: #2c1e6c;
+  --color-violeta-700: #3f2a92;
+  --color-violeta-600: #4b2a9b;
+  --color-violeta-400: #7b5cdf;
+  --color-violeta-100: #ece8f7;
+  --color-violeta-50:  #f5f3fb;
+
+  --color-blanco: #ffffff;
+  --color-texto: #201a33;
+  --color-texto-suave: #55506b;
+  --color-borde: #e1dcf2;
+  --color-error: #a02020;
+  --color-exito: #1e7e42;
+
+  --color-fondo: var(--color-blanco);
+  --color-marca: var(--color-violeta-700);
+  --color-marca-hover: var(--color-violeta-800);
+  --color-acento: var(--color-violeta-400);
+
+  /* Tipografía — un único lenguaje tipográfico para todo el sitio, igual
+     que en la identidad original: Roboto en todos lados, la jerarquía la
+     da el peso y el tamaño. --font-heading existe como variable única para
+     que ninguna sección declare una fuente "a mano". */
+  --fuente-texto: 'Roboto', system-ui, sans-serif;
+  --font-heading: 'Roboto', system-ui, sans-serif;
+
+  --peso-titulo-liviano: 300;
+  --peso-titulo-medio: 500;
+  --peso-titulo-fuerte: 700;
+
+  /* Escala tipográfica (ajuste general): antes --tamano-h1 llegaba a 60px,
+     --tamano-h2 a 40px y --espaciado-seccion a 96px — cada sección se
+     sentía "hero". Bajados ~20-25% en el techo para una lectura más
+     editorial/liviana; los pisos (mobile) se recortan menos para no
+     perder legibilidad. */
+  --tamano-h1: clamp(1.9rem, 1.2rem + 2.6vw, 3rem);
+  --tamano-h2: clamp(1.5rem, 1.25rem + 1.3vw, 2.1rem);
+  --tamano-h3: clamp(1.05rem, 0.98rem + 0.35vw, 1.25rem);
+  --tamano-texto: 1rem;
+  --tamano-destacado: clamp(1.05rem, 1rem + 0.4vw, 1.2rem);
+
+  /* Layout */
+  --ancho-contenedor: 1200px;
+  --ancho-contenedor-angosto: 860px;
+  --espaciado-seccion: clamp(2.75rem, 2.1rem + 2.4vw, 5rem);
+  --padding-lateral: 1.25rem;
+
+  /* Espaciado en escala */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 1rem;
+  --space-4: 1.5rem;
+  --space-5: 2rem;
+  --space-6: 3rem;
+  --space-7: 4rem;
+  --space-8: 5.5rem;
+
+  /* Bordes / sombras */
+  --radio-s: 10px;
+  --radio-m: 16px;
+  --radio-l: 24px;
+  --radio-pill: 999px;
+
+  --sombra-s: 0 2px 8px rgba(63, 42, 146, 0.08);
+  --sombra-m: 0 8px 24px rgba(63, 42, 146, 0.14);
+  --sombra-l: 0 16px 48px rgba(63, 42, 146, 0.18);
+
+  --transicion-rapida: 0.18s ease;
+  --transicion-suave: 0.4s ease;
+
+  /* Alto real del header — se lee también desde JS/HTML para que el Hero
+     y la sección sticky puedan restar exactamente este valor de 100dvh
+     en vez de asumir un número fijo. Ver 2. HERO más abajo. */
+  --header-alto: 88px;
+}
+
+@media (max-width: 480px) {
+  :root { --header-alto: 72px; }
+}
+
+/* ---------------------------------------------------------------------
+   2. Reset básico
+   --------------------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+html, body, h1, h2, h3, h4, p, ul, ol, figure { margin: 0; padding: 0; }
+ul, ol { list-style: none; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+body {
+  font-family: var(--fuente-texto);
+  color: var(--color-texto);
+  background: var(--color-fondo);
+  line-height: 1.6;
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+  padding-top: var(--header-alto);
+}
+
+h1, h2, h3 {
+  font-family: var(--font-heading);
+  font-weight: var(--peso-titulo-liviano);
+  line-height: 1.15;
+  color: var(--color-violeta-900);
+}
+
+h1 { font-size: var(--tamano-h1); }
+h1 strong, h1 b { font-weight: var(--peso-titulo-medio); color: inherit; }
+
+h2 { font-size: var(--tamano-h2); font-weight: var(--peso-titulo-medio); }
+h2 strong, h2 b { font-weight: var(--peso-titulo-fuerte); }
+
+h3 { font-size: var(--tamano-h3); font-weight: var(--peso-titulo-medio); }
+
+p { max-width: 70ch; }
+
+img, video, iframe {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a { color: inherit; }
+
+/* Foco visible y consistente para navegación por teclado */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid var(--color-violeta-400);
+  outline-offset: 2px;
+  border-radius: var(--radio-s);
+}
+
+.contenedor {
+  width: 100%;
+  max-width: var(--ancho-contenedor);
+  margin: 0 auto;
+  padding: 0 var(--padding-lateral);
+}
+
+.contenedor--angosto {
+  width: 100%;
+  max-width: var(--ancho-contenedor-angosto);
+  margin: 0 auto;
+  padding: 0 var(--padding-lateral);
+}
+
+.seccion {
+  padding-block: var(--espaciado-seccion);
+}
+
+.visualmente-oculto {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -60px;
+  background: var(--color-marca);
+  color: var(--color-blanco);
+  padding: 0.6rem 1.2rem;
+  border-radius: var(--radio-s);
+  z-index: 2000;
+  transition: top var(--transicion-rapida);
+}
+.skip-link:focus { top: 1rem; }
+
+/* Botones reutilizables */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.7rem;
+  border-radius: var(--radio-pill);
+  font-weight: 700;
+  text-decoration: none;
+  border: 2px solid transparent;
+  cursor: pointer;
+  font-family: var(--fuente-texto);
+  font-size: 1rem;
+  transition: background-color var(--transicion-rapida), color var(--transicion-rapida), transform var(--transicion-rapida), border-color var(--transicion-rapida);
+  line-height: 1.2;
+}
+.btn:hover { transform: translateY(-1px); }
+.btn:active { transform: translateY(0); }
+
+.btn--primario {
+  background: var(--color-marca);
+  color: var(--color-blanco);
+}
+.btn--primario:hover { background: var(--color-marca-hover); color: var(--color-blanco); }
+
+.btn--claro {
+  background: var(--color-blanco);
+  color: var(--color-marca);
+}
+.btn--claro:hover { background: var(--color-violeta-100); }
+
+.btn--fantasma {
+  background: transparent;
+  color: var(--color-marca);
+  border-color: var(--color-marca);
+}
+.btn--fantasma:hover { background: var(--color-violeta-50); }
+
+.btn--grande { padding: 0.95rem 2.1rem; font-size: 1.05rem; }
+
+.etiqueta {
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: var(--color-marca);
+  background: var(--color-violeta-100);
+  padding: 0.3rem 0.8rem;
+  border-radius: var(--radio-pill);
+}
+
+/* =====================================================================
+   3. Header
+   ===================================================================== */
+.site-header {
+  position: fixed;
+  inset-block-start: 0;
+  inset-inline: 0;
+  height: var(--header-alto);
+  background: var(--color-blanco);
+  box-shadow: var(--sombra-s);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+}
+
+.site-header .contenedor {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  width: 100%;
+}
+
+.site-header__logo {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+/* Logo ~100% más grande que la primera versión (42px -> 84px), con el
+   header creciendo lo justo (--header-alto 76px -> 88px) para que quede
+   equilibrado en vez de un logo enorme apretado en una franja angosta. */
+.site-header__logo img { height: 84px; width: auto; }
+
+.site-header__acciones {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+}
+
+.site-header__youtube {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  font-weight: var(--peso-titulo-medio);
+  color: var(--color-texto);
+  padding: 0.5rem 0.25rem;
+  border-radius: var(--radio-s);
+  white-space: nowrap;
+  transition: color var(--transicion-rapida);
+}
+.site-header__youtube:hover { color: var(--color-marca); }
+
+.site-header__materiales {
+  white-space: nowrap;
+  padding: 0.6rem 1.3rem;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 480px) {
+  .site-header__materiales { padding: 0.55rem 0.9rem; font-size: 0.85rem; }
+  .site-header__logo img { height: 52px; }
+  .site-header__acciones { gap: var(--space-3); }
+  .site-header__youtube { font-size: 0.85rem; padding: 0.4rem 0.1rem; }
+}
+
+/* =====================================================================
+   4. Hero
+   ===================================================================== */
+.hero {
+  position: relative;
+  /* Ocupa exactamente el resto de la primera pantalla (100% del viewport
+     menos el header fijo), no un porcentaje aproximado como "88vh" — eso
+     era lo que dejaba una franja blanca de la sección siguiente asomando
+     abajo en pantallas más altas. "dvh" evita además el salto por la
+     barra de direcciones del navegador en mobile; "vh" queda como
+     fallback para navegadores que no soportan dvh. */
+  min-height: calc(100vh - var(--header-alto));
+  min-height: calc(100dvh - var(--header-alto));
+  display: flex;
+  align-items: center;
+  color: var(--color-blanco);
+  background-color: var(--color-violeta-900);
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(36, 26, 77, 0.55) 0%, rgba(36, 26, 77, 0.78) 65%, rgba(36, 26, 77, 0.92) 100%);
+  z-index: 0;
+}
+
+.hero__contenido {
+  position: relative;
+  z-index: 1;
+  max-width: 46rem;
+  padding-block: var(--space-7);
+}
+
+.hero__titulo {
+  color: var(--color-blanco);
+  overflow-wrap: break-word;
+}
+.hero__titulo strong { color: #d9ceff; }
+
+.hero__subtitulo {
+  margin-top: var(--space-4);
+  font-size: var(--tamano-destacado);
+  max-width: 42ch;
+  color: rgba(255,255,255,0.92);
+}
+
+.hero__cta { margin-top: var(--space-5); }
+
+.hero--cargando .hero__titulo,
+.hero--cargando .hero__subtitulo { opacity: 0.65; }
+
+/* =====================================================================
+   5. Introducción "¿Qué es Kalulu?" — transición Hero -> sticky
+   ===================================================================== */
+.kalulu-intro {
+  background: var(--color-violeta-50);
+  /* Antes 62vh + space-8 (88px): un bloque casi tan alto como un segundo
+     Hero solo para centrar una frase. Se acorta a un alto natural con un
+     mínimo moderado, y el título pasa a compartir --tamano-h1 (ya
+     reducido) en vez de tener su propia escala grande y duplicada. */
+  padding: var(--space-7) var(--padding-lateral);
+  min-height: 40vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.kalulu-intro__inner {
+  max-width: 46rem;
+  margin: 0 auto;
+}
+
+.kalulu-intro .etiqueta { margin-bottom: var(--space-3); }
+
+.kalulu-intro h2 {
+  font-size: var(--tamano-h1);
+  font-weight: var(--peso-titulo-liviano);
+  line-height: 1.25;
+  color: var(--color-violeta-900);
+}
+
+.kalulu-intro h2 strong {
+  font-weight: var(--peso-titulo-fuerte);
+  color: var(--color-marca);
+}
+
+/* =====================================================================
+   6. Sección interactiva "Sobre Kalulu" — pantalla dividida fija, el
+   contenido entra/sale con el progreso real del scroll (ver
+   assets/js/kalulu-sticky.js). Sin scroll-jacking: el navegador sigue
+   manejando el scroll; JS solo lee la posición y mueve transform/opacity.
+   ===================================================================== */
+.kalulu-sticky {
+  position: relative;
+  background: var(--color-violeta-50);
+}
+
+.kalulu-sticky__track {
+  position: relative;
+  /* Alto total del recorrido: 3 paneles x 100vh = dos transiciones
+     completas de 100vh de scroll cada una. Sin "colchón" extra entre
+     paneles -> no quedan huecos donde el scroll no mueve nada. */
+  height: 300vh;
+}
+
+.kalulu-sticky__pegado {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.kalulu-sticky__par {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: stretch;
+  will-change: transform, opacity;
+  /* Estado discreto por defecto = INACTIVO: completamente invisible y sin
+     interacción. Nunca hay opacidades parciales permanentes acá -- solo
+     0 o 1 (ver assets/js/kalulu-sticky.js, que agrega/saca ".is-active"
+     según en qué tercio del scroll está el usuario, un solo panel activo
+     a la vez). "visibility" se retrasa al ocultarse para que la card
+     saliente pueda completar su fade breve antes de desaparecer del
+     todo, pero se vuelve visible sin retraso al activarse. */
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(20px);
+  transition: opacity 300ms ease, transform 400ms ease, visibility 0s linear 300ms;
+}
+
+.kalulu-sticky__par.is-active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+  transition: opacity 300ms ease, transform 400ms ease, visibility 0s linear 0s;
+}
+
+.kalulu-sticky__mitad {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  padding: var(--space-6) var(--space-5);
+}
+
+.kalulu-sticky__texto { flex-direction: column; justify-content: center; }
+.kalulu-sticky__texto-inner { max-width: 30rem; margin-inline: auto; }
+.kalulu-sticky__texto-inner .etiqueta { margin-bottom: var(--space-3); }
+.kalulu-sticky__texto-inner p { margin-top: var(--space-3); color: var(--color-texto-suave); }
+
+.kalulu-sticky__visual {
+  background: var(--color-violeta-100);
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.kalulu-sticky__media {
+  width: 100%;
+  max-width: 32rem;
+  border-radius: var(--radio-l);
+  overflow: hidden;
+  box-shadow: var(--sombra-m);
+}
+
+.kalulu-sticky__media img,
+.kalulu-sticky__media video { width: 100%; border-radius: var(--radio-l); }
+
+.kalulu-sticky__media a { display: block; }
+
+.kalulu-sticky__paso {
+  display: inline-flex;
+  margin-bottom: var(--space-3);
+}
+
+.kalulu-sticky__progreso {
+  position: absolute;
+  bottom: var(--space-4);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: var(--space-2);
+  z-index: 2;
+}
+.kalulu-sticky__punto {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--color-borde);
+  transition: background var(--transicion-rapida), transform var(--transicion-rapida);
+}
+.kalulu-sticky__punto--activo { background: var(--color-marca); transform: scale(1.35); }
+
+/* Mobile / tablets angostas y prefers-reduced-motion: se elimina el
+   efecto sticky por completo. Cada panel (texto + su propio recurso
+   visual, ya agrupados en ".kalulu-sticky__par") pasa a ser un bloque
+   normal en el flujo — nunca la misma pantalla dividida encogida — y el
+   JS ni siquiera engancha el listener de scroll (ver kalulu-sticky.js). */
+@media (max-width: 900px) {
+  .kalulu-sticky__track { height: auto; }
+  .kalulu-sticky__pegado {
+    position: static;
+    height: auto;
+    overflow: visible;
+    display: flex;
+    flex-direction: column;
+  }
+  .kalulu-sticky__par {
+    position: static;
+    inset: auto;
+    flex-direction: column-reverse;
+    opacity: 1 !important;
+    transform: none !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+  }
+  .kalulu-sticky__par + .kalulu-sticky__par { border-top: 1px solid var(--color-borde); }
+  .kalulu-sticky__mitad { width: 100%; padding: var(--space-5) var(--padding-lateral); }
+  .kalulu-sticky__visual { padding-top: var(--space-6); }
+  .kalulu-sticky__media { max-width: 100%; }
+  .kalulu-sticky__progreso { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kalulu-sticky__track { height: auto; }
+  .kalulu-sticky__pegado { position: static; height: auto; overflow: visible; display: flex; flex-direction: column; }
+  .kalulu-sticky__par {
+    position: static; inset: auto; flex-direction: column-reverse;
+    opacity: 1 !important; transform: none !important; visibility: visible !important;
+    pointer-events: auto !important;
+  }
+  .kalulu-sticky__par + .kalulu-sticky__par { border-top: 1px solid var(--color-borde); }
+  .kalulu-sticky__mitad { width: 100%; }
+  .kalulu-sticky__progreso { display: none; }
+}
+
+/* =====================================================================
+   7. Noticias — composición editorial: la destacada y las secundarias
+   viven en UNA sola grilla (no dos bloques separados), para que se
+   sientan parte de la misma pieza en vez de "la grande + una lista
+   aparte con espacio muerto alrededor".
+   ===================================================================== */
+.noticias__estado { text-align: center; padding: var(--space-5) 0; color: var(--color-texto-suave); }
+.noticias__estado--error { color: var(--color-error); }
+
+.noticias__bento {
+  display: grid;
+  /* ~24px: mismo valor para el gap entre columnas en desktop y para el
+     espacio entre las 3 noticias apiladas en mobile/tablet. */
+  gap: var(--space-4);
+  margin-top: var(--space-6);
+}
+
+.noticia-card {
+  background: var(--color-blanco);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-m);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--sombra-s);
+  transition: box-shadow var(--transicion-rapida), transform var(--transicion-rapida);
+  /* Nunca alturas forzadas: cada card mide lo que su contenido necesita. */
+}
+.noticia-card:hover { box-shadow: var(--sombra-m); transform: translateY(-2px); }
+
+.noticia-card img { aspect-ratio: 16/9; object-fit: cover; width: 100%; display: block; }
+
+.noticia-card--destacada h3 { font-size: var(--tamano-h3); font-weight: var(--peso-titulo-medio); }
+
+.noticia-card__contenido {
+  padding: var(--space-3) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.noticia-card__fecha { font-size: 0.85rem; color: var(--color-texto-suave); text-transform: uppercase; letter-spacing: 0.04em; }
+/* La descripción no forma parte de esta composición editorial compacta
+   (destacada y secundarias muestran solo título, fecha y botón) — el dato
+   sigue viniendo de Supabase igual que siempre, solo no se pinta acá, así
+   que no se toca ni la consulta ni "noticias.js". */
+.noticia-card__contenido p { display: none; }
+/* Botón inmediatamente después de la fecha, con el espaciado normal del
+   "gap" del contenedor — nada de "margin-top: auto" empujándolo al fondo
+   de una card estirada artificialmente. */
+.noticia-card__cta { align-self: flex-start; }
+
+/* Secundarias: filas horizontales (imagen ancha reconocible + texto) en
+   vez de una tira vertical angosta — leen como una lista editorial
+   continua, no como bloques independientes flotando con aire de más. */
+.noticias__grid-secundaria {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  /* En desktop (ver media query de abajo) esta columna se estira a la
+     misma altura que la destacada; repartida en dos filas iguales, así
+     la altura combinada de ambas secundarias queda igual a la altura
+     total de la destacada, en vez de quedar corta con aire libre abajo
+     de la columna. En mobile/tablet (columna única) esto no aplica: cada
+     card mide solo lo que su propio contenido necesita. */
+  height: 100%;
+}
+
+.noticias__grid-secundaria .noticia-card {
+  flex-direction: row;
+  align-items: stretch;
+  min-height: 7.5rem;
+  flex: 1 1 0;
+}
+.noticias__grid-secundaria .noticia-card img {
+  /* ~40% del ancho de la tarjeta: suficiente para que la imagen se
+     entienda, nunca una tira. Se anula el aspect-ratio 16/9 de la regla
+     base a propósito: acá el alto no depende de la relación de aspecto
+     original de la foto (que en Supabase puede venir con cualquier
+     proporción) sino que se fija en "100%" de la fila -- la altura real
+     que define el texto -- y "object-fit: cover" recorta sin deformar,
+     sea cual sea esa altura o la proporción de la foto original. */
+  width: 40%;
+  flex: 0 0 40%;
+  height: 100%;
+  align-self: stretch;
+  flex-shrink: 0;
+}
+.noticias__grid-secundaria .noticia-card__contenido {
+  padding: var(--space-3);
+  gap: 0.35rem;
+  justify-content: center;
+}
+.noticias__grid-secundaria .noticia-card h3 {
+  font-size: 1rem;
+  font-weight: var(--peso-titulo-medio);
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+@media (min-width: 1000px) {
+  /* Grilla única: destacada a la izquierda (~56%), lista de secundarias a
+     la derecha (~44%). La columna derecha se estira (stretch) a la altura
+     de la destacada, pero repartida en dos filas iguales (flex:1 en cada
+     card de .noticias__grid-secundaria) con la imagen a "height:100%" +
+     "object-fit:cover": el espacio extra se llena con más foto visible,
+     nunca con una card vacía ni con el botón despegado del contenido. */
+  .noticias__bento { grid-template-columns: 1.3fr 1fr; align-items: stretch; }
+}
+
+/* =====================================================================
+   8. Materiales (sección home + página /materiales/)
+   ===================================================================== */
+.materiales {
+  background: var(--color-violeta-700);
+  color: var(--color-blanco);
+  border-radius: var(--radio-l);
+  padding: var(--space-6) var(--space-5);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-4);
+}
+
+.materiales h2, .materiales p { color: var(--color-blanco); }
+.materiales__texto { display: flex; flex-direction: column; gap: var(--space-4); }
+.materiales__texto .etiqueta { margin-bottom: 0; }
+.materiales__chips { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-1); }
+.materiales__chip {
+  background: rgba(255,255,255,0.14);
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: var(--radio-pill);
+  padding: 0.45rem 1.1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* El CTA ya no queda aislado al costado: se le da su propio bloque con
+   aire arriba, y en mobile ocupa el ancho completo para sentirse parte
+   de la composición en vez de "flotando" al final. */
+.materiales__accion { width: 100%; }
+.materiales__accion .btn { width: 100%; text-align: center; }
+
+@media (min-width: 900px) {
+  .materiales { flex-direction: row; align-items: center; justify-content: space-between; gap: var(--space-6); padding: var(--space-6); }
+  .materiales__texto { max-width: 38rem; gap: var(--space-3); }
+  .materiales__accion { width: auto; flex-shrink: 0; }
+  .materiales__accion .btn { width: auto; }
+}
+
+.pagina-materiales {
+  padding-top: calc(var(--header-alto) + var(--space-6));
+  padding-bottom: var(--space-7);
+  min-height: 60vh;
+}
+
+/* ---- Introducción: título + un párrafo, nada compitiendo visualmente ---- */
+.materiales-intro { text-align: center; max-width: var(--ancho-contenedor-angosto); margin: 0 auto var(--space-6); }
+.materiales-intro .etiqueta { margin-bottom: var(--space-3); }
+/* Mismo sistema tipográfico de los headings globales (--font-heading /
+   --tamano-h1), pero con el peso "fuerte" en vez del "liviano" que usa
+   el h1 por defecto (pensado para el Hero) — acá se busca jerarquía y
+   peso visual fuertes, no la variante liviana/elegante. */
+.materiales-intro h1 {
+  font-family: var(--font-heading);
+  font-size: var(--tamano-h1);
+  font-weight: var(--peso-titulo-fuerte);
+  color: var(--color-marca);
+  line-height: 1.1;
+}
+.materiales-intro p { margin-inline: auto; margin-top: var(--space-3); color: var(--color-texto-suave); }
+
+/* ---- CTA de comunidad de WhatsApp: un link simple, no una imagen/QR ---- */
+.materiales-comunidad {
+  text-align: center;
+  max-width: var(--ancho-contenedor-angosto);
+  margin: 0 auto var(--space-7);
+  padding: var(--space-5);
+  background: var(--color-violeta-50);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-l);
+}
+.materiales-comunidad__pregunta { font-weight: 700; margin-bottom: var(--space-2); }
+.materiales-comunidad__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  font-weight: 700;
+  color: var(--color-marca);
+  text-decoration: none;
+}
+.materiales-comunidad__link:hover { text-decoration: underline; }
+.materiales-comunidad__link:focus-visible {
+  outline: 3px solid var(--color-marca);
+  outline-offset: 3px;
+  border-radius: var(--radio-s);
+}
+/* Mientras no haya un link real cargado (ver materiales_config /
+   assets/js/materiales-lista.js): se avisa en vez de simular un enlace
+   que en realidad no lleva a ningún lado. */
+.materiales-comunidad__link--pendiente {
+  color: var(--color-texto-suave);
+  cursor: not-allowed;
+}
+.materiales-comunidad__link--pendiente::after {
+  content: '(pendiente)';
+  font-weight: 600;
+  font-size: 0.8em;
+}
+.materiales-comunidad__nota {
+  margin-top: var(--space-2);
+  font-size: 0.85rem;
+  color: var(--color-texto-suave);
+}
+
+/* ---- Biblioteca: una sección por categoría, grilla de tarjetas compactas ---- */
+.materiales-biblioteca__estado { text-align: center; padding: var(--space-5) 0; color: var(--color-texto-suave); }
+
+.materiales-categoria { margin-bottom: var(--space-7); }
+.materiales-categoria__titulo { margin-bottom: var(--space-4); }
+
+.materiales-grid {
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: 1fr;
+}
+@media (min-width: 560px) {
+  .materiales-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 900px) {
+  .materiales-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+.material-card {
+  background: var(--color-blanco);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-m);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  box-shadow: var(--sombra-s);
+  transition: box-shadow var(--transicion-rapida), transform var(--transicion-rapida);
+}
+.material-card:hover { box-shadow: var(--sombra-m); transform: translateY(-2px); }
+
+.material-card__icono {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  background: var(--color-violeta-100);
+  border-radius: var(--radio-m);
+}
+
+.material-card__cuerpo { display: flex; flex-direction: column; gap: 0.35rem; }
+.material-card__titulo { font-size: 1.05rem; font-weight: var(--peso-titulo-medio); }
+.material-card__descripcion {
+  font-size: 0.9rem;
+  color: var(--color-texto-suave);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.material-card__pendiente { font-size: 0.85rem; color: var(--color-texto-suave); font-style: italic; }
+
+/* Dos acciones claras, nunca toda la tarjeta como un único link ambiguo.
+   Tamaño cómodo para touch (min. ~44px de alto entre padding + line-height). */
+.material-card__acciones { display: flex; gap: var(--space-2); margin-top: auto; }
+.material-card__accion {
+  flex: 1 1 0;
+  padding: 0.65rem 1rem;
+  font-size: 0.9rem;
+  min-height: 44px;
+}
+.material-card__accion--deshabilitada {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.material-card__accion:focus-visible {
+  outline: 3px solid var(--color-marca);
+  outline-offset: 2px;
+}
+
+/* =====================================================================
+   9. Carrusel "Qué ofrecemos"
+   ===================================================================== */
+.ofrecemos__carrusel-wrap { position: relative; margin-top: var(--space-5); }
+
+.ofrecemos__carrusel {
+  display: flex;
+  gap: var(--space-4);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: var(--space-2) var(--padding-lateral) var(--space-5);
+  margin: 0 calc(var(--padding-lateral) * -1);
+  /* Firefox: "auto" (en vez de "thin") deja una barra más gruesa y fácil
+     de agarrar, dejando claro que el control es horizontal. */
+  scrollbar-width: auto;
+  scrollbar-color: var(--color-violeta-400) var(--color-violeta-100);
+  -webkit-overflow-scrolling: touch;
+}
+.ofrecemos__carrusel:focus-visible { outline: 3px solid var(--color-violeta-400); outline-offset: 4px; }
+
+/* Chrome/Safari/Edge: scrollbar propia, más gruesa y con thumb bien
+   visible — sin exagerar el alto para no competir con las tarjetas. */
+.ofrecemos__carrusel::-webkit-scrollbar { height: 12px; }
+.ofrecemos__carrusel::-webkit-scrollbar-track {
+  background: var(--color-violeta-100);
+  border-radius: var(--radio-pill);
+}
+.ofrecemos__carrusel::-webkit-scrollbar-thumb {
+  background: var(--color-violeta-400);
+  border-radius: var(--radio-pill);
+  border: 3px solid var(--color-violeta-100);
+}
+.ofrecemos__carrusel::-webkit-scrollbar-thumb:hover { background: var(--color-marca); }
+
+.ofrecemos__tarjeta {
+  scroll-snap-align: start;
+  flex: 0 0 auto;
+  width: min(78vw, 300px);
+  background: var(--color-blanco);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-m);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--sombra-s);
+}
+
+.ofrecemos__tarjeta-imagen { aspect-ratio: 4/3; overflow: hidden; background: var(--color-violeta-100); }
+.ofrecemos__tarjeta-imagen img { width: 100%; height: 100%; object-fit: cover; }
+
+.ofrecemos__tarjeta-cuerpo { padding: var(--space-4); display: flex; flex-direction: column; gap: var(--space-2); flex: 1; }
+.ofrecemos__tarjeta-cuerpo p { color: var(--color-texto-suave); font-size: 0.95rem; }
+.ofrecemos__tarjeta-cta { margin-top: auto; align-self: flex-start; font-weight: 700; color: var(--color-marca); text-decoration: none; }
+.ofrecemos__tarjeta-cta:hover { text-decoration: underline; }
+
+.ofrecemos__nav {
+  display: none;
+  position: absolute;
+  top: 40%;
+  transform: translateY(-50%);
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--color-borde);
+  background: var(--color-blanco);
+  box-shadow: var(--sombra-s);
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  cursor: pointer;
+  color: var(--color-marca);
+}
+.ofrecemos__nav--prev { left: -12px; }
+.ofrecemos__nav--next { right: -12px; }
+
+@media (min-width: 780px) {
+  .ofrecemos__nav { display: flex; }
+  .ofrecemos__tarjeta { width: 280px; }
+}
+
+/* =====================================================================
+   10. Ciencia ciudadana — dos momentos visuales claramente diferenciados:
+   10a. Preguntas abiertas: editorial, fondo claro, tarjetas grandes 2x2.
+   10b. Cómo investigamos juntos: violeta institucional, dos columnas
+        asimétricas + cierre con CTA integrado a la misma sección.
+   ===================================================================== */
+
+/* --- 10a. Preguntas abiertas (fondo claro) ------------------------------ */
+.ciencia-preguntas__intro { max-width: var(--ancho-contenedor-angosto); }
+.ciencia-preguntas__intro .etiqueta { margin-bottom: var(--space-4); }
+.ciencia-preguntas__intro h2 { margin-top: var(--space-3); }
+.ciencia-preguntas__intro p {
+  margin-top: var(--space-4);
+  max-width: 58ch;
+  font-size: var(--tamano-destacado);
+  color: var(--color-texto-suave);
+}
+
+.ciencia-preguntas__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+  margin-top: var(--space-7);
+}
+@media (min-width: 720px) {
+  .ciencia-preguntas__grid { grid-template-columns: repeat(2, 1fr); gap: var(--space-5); }
+}
+.ciencia-preguntas__estado { grid-column: 1 / -1; text-align: center; padding: var(--space-4) 0; color: var(--color-texto-suave); }
+
+/* Tarjeta editorial: número + pregunta. Bordes/fondo muy sutiles, sin
+   sombra ni radio pronunciado, para que se lea como una publicación y
+   nunca como un botón (sin cursor de puntero, sin mayúsculas). */
+.ciencia-preguntas__tarjeta {
+  padding: var(--space-5);
+  background: var(--color-violeta-50);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-s);
+  transition: background-color var(--transicion-suave), border-color var(--transicion-suave), transform var(--transicion-rapida);
+}
+.ciencia-preguntas__tarjeta::before {
+  content: '';
+  display: block;
+  width: 28px;
+  height: 3px;
+  border-radius: var(--radio-pill);
+  background: var(--color-violeta-400);
+  margin-bottom: var(--space-4);
+  transition: background-color var(--transicion-suave), width var(--transicion-suave);
+}
+.ciencia-preguntas__tarjeta:hover {
+  background: var(--color-violeta-100);
+  border-color: var(--color-violeta-400);
+  transform: translateY(-3px);
+}
+.ciencia-preguntas__tarjeta:hover::before { background: var(--color-exito); width: 40px; }
+
+.ciencia-preguntas__tarjeta-num {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--color-texto-suave);
+  margin-bottom: var(--space-2);
+}
+.ciencia-preguntas__tarjeta-texto {
+  font-size: clamp(1.05rem, 0.98rem + 0.5vw, 1.3rem);
+  font-weight: var(--peso-titulo-fuerte);
+  line-height: 1.35;
+  color: var(--color-texto);
+  margin: 0;
+}
+
+/* --- 10b. Cómo investigamos juntos (violeta institucional, full-bleed) --
+   Refinado: composición más sobria y compacta (editorial/académica, no
+   "segundo hero"). La escala, el espaciado y el peso tipográfico son los
+   que hacen el trabajo; sin cajas, sombras ni nuevos recursos gráficos. */
+.ciencia-investigacion {
+  background: var(--color-violeta-900);
+  color: var(--color-blanco);
+  /* Segunda vuelta de ajuste: todavía se sentía pesada. Techo bajado de
+     96px a 72px y piso de 56px a 48px. */
+  padding-block: clamp(3rem, 2.2rem + 2.4vw, 4.5rem);
+}
+.ciencia-investigacion h2, .ciencia-investigacion h3 { color: var(--color-blanco); }
+
+.ciencia-investigacion__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+}
+@media (min-width: 860px) {
+  .ciencia-investigacion__grid { grid-template-columns: 41fr 59fr; gap: var(--space-5); align-items: center; }
+}
+
+/* Statement: dos líneas con jerarquía propia (peso, no tamaño de hero).
+   Segunda vuelta: se baja otro ~20% para que deje de leerse como un
+   segundo Hero — sigue siendo el elemento más fuerte de la sección, pero
+   ya no compite con el H1 real de arriba. */
+.ciencia-investigacion__statement h2 { line-height: 1.12; }
+.ciencia-investigacion__linea-liviana,
+.ciencia-investigacion__linea-fuerte {
+  display: block;
+}
+.ciencia-investigacion__linea-liviana {
+  font-size: clamp(2rem, 1.6rem + 1.6vw, 2.8rem);
+  font-weight: var(--peso-titulo-liviano);
+}
+.ciencia-investigacion__linea-fuerte {
+  font-size: clamp(2.1rem, 1.65rem + 1.7vw, 2.9rem);
+  font-weight: var(--peso-titulo-fuerte);
+}
+/* Mobile: bastante más chico que el piso pensado para desktop. */
+@media (max-width: 599px) {
+  .ciencia-investigacion__linea-liviana { font-size: clamp(1.4rem, 1.2rem + 2vw, 1.9rem); }
+  .ciencia-investigacion__linea-fuerte { font-size: clamp(1.5rem, 1.25rem + 2.2vw, 2rem); }
+}
+/* Único acento verde/lima de toda la sección: una línea fina bajo "con el
+   aula", nada más. */
+.ciencia-investigacion__resaltado {
+  text-decoration: underline;
+  text-decoration-color: var(--color-exito);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.14em;
+}
+.ciencia-investigacion__statement p {
+  margin-top: var(--space-3);
+  max-width: 450px;
+  font-size: clamp(1rem, 0.97rem + 0.25vw, 1.15rem);
+  line-height: 1.5;
+  color: rgba(255,255,255,0.75);
+}
+
+.ciencia-investigacion__lista { border-top: 1px solid rgba(255,255,255,0.15); }
+.ciencia-investigacion__paso {
+  display: grid;
+  grid-template-columns: 2.75rem 1fr;
+  gap: var(--space-3);
+  padding: var(--space-4) 0;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+}
+.ciencia-investigacion__paso-num {
+  /* Bajado de 1.8–2.2rem a 1.5–1.8rem: más discreto, ya no compite con
+     el título de cada paso. */
+  font-size: clamp(1.5rem, 1.4rem + 0.4vw, 1.8rem);
+  font-weight: var(--peso-titulo-liviano);
+  line-height: 1;
+  color: rgba(123, 92, 223, 0.6);
+}
+.ciencia-investigacion__paso-texto h3 {
+  /* Reutiliza la escala global de H3 (ya reducida) en vez de un clamp
+     propio — menos variables sueltas para el mismo rol tipográfico. */
+  margin-bottom: var(--space-2);
+  font-size: var(--tamano-h3);
+}
+.ciencia-investigacion__paso-texto p {
+  max-width: 52ch;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: rgba(255,255,255,0.78);
+}
+
+.ciencia-investigacion__cierre {
+  margin-top: var(--space-7);
+  padding-top: var(--space-6);
+  border-top: 1px solid rgba(255,255,255,0.18);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-5);
+}
+@media (min-width: 640px) {
+  .ciencia-investigacion__cierre { flex-direction: row; align-items: center; justify-content: space-between; }
+}
+.ciencia-investigacion__cierre-texto {
+  margin: 0;
+  max-width: 40ch;
+  font-size: var(--tamano-h3);
+  font-weight: var(--peso-titulo-medio);
+}
+.ciencia-investigacion__cierre .btn { width: 100%; text-align: center; flex-shrink: 0; }
+@media (min-width: 640px) {
+  .ciencia-investigacion__cierre .btn { width: auto; }
+}
+
+/* =====================================================================
+   11. Quiénes somos — grilla tipo "alana": foto grande arriba, nombre y
+   cargo/descripción debajo. Desktop 4 columnas / tablet 2 / mobile 1.
+   ===================================================================== */
+.equipo__grid {
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: 1fr;
+  margin-top: var(--space-6);
+}
+@media (min-width: 560px) { .equipo__grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 900px) { .equipo__grid { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 1180px) { .equipo__grid { grid-template-columns: repeat(4, 1fr); } }
+
+.equipo__miembro {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-blanco);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-m);
+  overflow: hidden;
+  box-shadow: var(--sombra-s);
+  transition: box-shadow var(--transicion-rapida), transform var(--transicion-rapida);
+}
+.equipo__miembro:hover { box-shadow: var(--sombra-m); transform: translateY(-2px); }
+
+.equipo__avatar-wrap {
+  width: 100%;
+  /* Composición más cuadrada y compacta que la vertical 4/5 anterior. */
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: var(--color-violeta-100);
+  flex-shrink: 0;
+}
+/* object-position por defecto centrado; se puede sobreescribir por
+   integrante desde JS (ver OBJECT_POSITION_EQUIPO en equipo.js) para
+   fotos donde un recorte cuadrado centrado cortaría la cara. Nunca se
+   deforma la imagen: siempre "cover", nunca "fill"/"stretch". */
+.equipo__avatar-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+
+.equipo__miembro-cuerpo {
+  padding: var(--space-3) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  text-align: left;
+  flex: 1;
+  justify-content: center;
+}
+.equipo__miembro h3 { font-size: 1rem; font-weight: var(--peso-titulo-medio); line-height: 1.25; }
+.equipo__miembro p {
+  color: var(--color-texto-suave);
+  font-size: 0.85rem;
+  line-height: 1.4;
+  /* Bloque de texto compacto: como máximo 2 líneas, para que las cuatro
+     tarjetas de una misma fila mantengan una altura pareja aun con
+     cargos de distinta longitud. */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.equipo__estado { text-align: center; padding: var(--space-5) 0; color: var(--color-texto-suave); grid-column: 1 / -1; }
+
+/* =====================================================================
+   12. Footer
+   ===================================================================== */
+.site-footer {
+  background: var(--color-violeta-900);
+  color: rgba(255,255,255,0.85);
+  padding-block: var(--space-6) var(--space-5);
+}
+
+.site-footer .contenedor {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.site-footer__top {
+  display: grid;
+  gap: var(--space-5);
+  grid-template-columns: 1fr;
+}
+@media (min-width: 720px) {
+  .site-footer__top { grid-template-columns: 1.2fr 1fr 1fr; }
+}
+
+.site-footer__marca { display: flex; flex-direction: column; gap: var(--space-3); }
+/* Logo del footer: se fija el ANCHO y la altura queda en "auto" para que la
+   imagen conserve su proporción original. Antes solo se fijaba la altura
+   (height: 40px) dentro de un contenedor flex en columna; como ningún
+   ancho quedaba explícito, el "align-items: stretch" por defecto del flexbox
+   terminaba estirando el logo horizontalmente para llenar la columna. Fijar
+   el ancho + "align-self: flex-start" elimina ese estiramiento y evita que
+   dependamos de que el navegador respete el aspect-ratio intrínseco. */
+.site-footer__marca img {
+  width: 150px;
+  height: auto;
+  align-self: flex-start;
+}
+.site-footer__marca p { color: rgba(255,255,255,0.7); max-width: 34ch; }
+
+.site-footer h4 {
+  color: var(--color-blanco);
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  margin-bottom: var(--space-3);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.site-footer ul { display: flex; flex-direction: column; gap: var(--space-2); }
+.site-footer a { text-decoration: none; color: rgba(255,255,255,0.78); transition: color .15s ease; }
+.site-footer a:hover,
+.site-footer a:focus-visible { color: var(--color-exito); text-decoration: underline; }
+
+.site-footer__social { display: flex; gap: var(--space-3); flex-wrap: wrap; }
+.site-footer__social a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px; height: 38px;
+  flex: 0 0 38px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  transition: background-color .15s ease;
+}
+.site-footer__social a:hover,
+.site-footer__social a:focus-visible {
+  background: rgba(30, 126, 66, 0.55);
+}
+.site-footer__social img { width: 18px; height: 18px; filter: invert(1); flex-shrink: 0; }
+
+.site-footer__bottom {
+  border-top: 1px solid rgba(255,255,255,0.15);
+  padding-top: var(--space-4);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-2);
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.6);
+}
+
+/* =====================================================================
+   13. Utilidades responsive generales
+   ===================================================================== */
+@media (max-width: 640px) {
+  :root { --padding-lateral: 1rem; }
+  .seccion { padding-block: clamp(2rem, 1.7rem + 2vw, 3rem); }
+}

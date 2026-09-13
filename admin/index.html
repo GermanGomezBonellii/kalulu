@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Kalulu · Panel de administración (rediseño)</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <img src="../../imagenes/logo.png" alt="Kalulu logo" class="logo">
+            <nav>
+                <span class="admin-header-titulo">Panel de administración (copia de /redesign)</span>
+                <button type="button" id="btn-logout" class="btn-admin-link" hidden>Cerrar sesión</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="admin-main">
+        <!-- Formulario de inicio de sesión -->
+        <section id="login-section" class="admin-login">
+            <form id="login-form" class="admin-login-form">
+                <h1>Ingresar</h1>
+                <p class="admin-login-ayuda">Acceso exclusivo para administradores de Kalulu.</p>
+
+                <label class="admin-campo">
+                    <span>Email</span>
+                    <input type="email" id="login-email" autocomplete="username" required>
+                </label>
+
+                <label class="admin-campo">
+                    <span>Contraseña</span>
+                    <input type="password" id="login-password" autocomplete="current-password" required>
+                </label>
+
+                <p id="login-error" class="admin-error" hidden></p>
+
+                <button type="submit" id="btn-login" class="btn-admin">Ingresar</button>
+            </form>
+        </section>
+
+        <!-- Panel de administración (oculto hasta confirmar sesión + permisos de admin) -->
+        <section id="panel-section" class="admin-panel" hidden>
+            <div class="admin-tabs" role="tablist">
+                <button type="button" id="tab-home" class="admin-tab" role="tab" aria-selected="false">Home</button>
+                <button type="button" id="tab-noticias" class="admin-tab activa" role="tab" aria-selected="true">Noticias</button>
+                <button type="button" id="tab-eventos" class="admin-tab" role="tab" aria-selected="false">Eventos</button>
+                <button type="button" id="tab-ofrecemos" class="admin-tab" role="tab" aria-selected="false">Qué ofrecemos</button>
+                <button type="button" id="tab-ciencia" class="admin-tab" role="tab" aria-selected="false">Ciencia ciudadana</button>
+                <button type="button" id="tab-equipo" class="admin-tab" role="tab" aria-selected="false">Equipo</button>
+                <button type="button" id="tab-materiales" class="admin-tab" role="tab" aria-selected="false">Materiales</button>
+            </div>
+
+            <!-- Panel Home (Hero) -->
+            <div id="panel-home" class="admin-tab-panel" hidden>
+                <div class="admin-panel-header">
+                    <h1>Home — Hero</h1>
+                </div>
+                <p class="admin-login-ayuda">Este texto y este botón son los que se muestran en la portada del sitio (sección Hero). La URL del botón puede ser una página interna (por ejemplo <code>/materiales/</code>), un Google Form o cualquier otro link externo.</p>
+
+                <p id="home-mensaje" class="admin-mensaje" hidden></p>
+                <p id="home-exito" class="admin-exito" hidden></p>
+                <p id="home-cargando" class="admin-mensaje">Cargando configuración...</p>
+
+                <form id="form-home" class="admin-form admin-form--estatica" hidden novalidate>
+                    <label class="admin-campo">
+                        <span>Título*</span>
+                        <textarea id="home-titulo" rows="2" maxlength="200" required></textarea>
+                    </label>
+
+                    <label class="admin-campo">
+                        <span>Subtítulo*</span>
+                        <textarea id="home-subtitulo" rows="3" maxlength="400" required></textarea>
+                    </label>
+
+                    <label class="admin-campo">
+                        <span>Texto del botón*</span>
+                        <input type="text" id="home-cta-texto" maxlength="60" required>
+                    </label>
+
+                    <label class="admin-campo">
+                        <span>URL del botón*</span>
+                        <input type="text" id="home-cta-url" placeholder="https://... o /materiales/" required>
+                    </label>
+
+                    <label class="admin-campo">
+                        <span>Imagen de fondo (opcional — URL http/https; en blanco usa la imagen definida en el proyecto)</span>
+                        <input type="url" id="home-imagen-url" placeholder="https://...">
+                    </label>
+
+                    <p id="home-form-error" class="admin-error" hidden></p>
+                    <p id="home-form-guardando" class="admin-mensaje" hidden>Guardando...</p>
+
+                    <div class="admin-form-acciones">
+                        <button type="submit" id="btn-guardar-home" class="btn-admin">Guardar cambios</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Panel Noticias -->
+            <div id="panel-noticias" class="admin-tab-panel">
+                <div class="admin-panel-header">
+                    <h1>Noticias</h1>
+                    <button type="button" id="btn-nueva-noticia" class="btn-admin">+ Nueva noticia</button>
+                </div>
+
+                <p id="panel-mensaje" class="admin-mensaje" hidden></p>
+                <p id="panel-cargando" class="admin-mensaje">Cargando noticias...</p>
+
+                <div class="admin-tabla-wrap">
+                    <table class="admin-tabla" id="tabla-noticias" hidden>
+                        <thead>
+                            <tr>
+                                <th>Imagen</th>
+                                <th>Título</th>
+                                <th>Fecha</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-noticias-body"></tbody>
+                    </table>
+                </div>
+
+                <p id="lista-vacia" class="admin-mensaje" hidden>Todavía no hay noticias cargadas. Creá la primera con el botón "+ Nueva noticia".</p>
+            </div>
+
+            <!-- Panel Eventos -->
+            <div id="panel-eventos" class="admin-tab-panel" hidden>
+                <div class="admin-panel-header">
+                    <h1>Eventos</h1>
+                    <button type="button" id="btn-nuevo-evento" class="btn-admin">+ Nuevo evento</button>
+                </div>
+
+                <p id="panel-eventos-mensaje" class="admin-mensaje" hidden></p>
+                <p id="panel-eventos-accion" class="admin-exito" hidden></p>
+                <p id="panel-eventos-cargando" class="admin-mensaje">Cargando eventos...</p>
+
+                <div class="admin-tabla-wrap">
+                    <table class="admin-tabla" id="tabla-eventos" hidden>
+                        <thead>
+                            <tr>
+                                <th>Imagen</th>
+                                <th>Título</th>
+                                <th>Fecha</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-eventos-body"></tbody>
+                    </table>
+                </div>
+
+                <p id="lista-eventos-vacia" class="admin-mensaje" hidden>Todavía no hay eventos cargados. Creá el primero con el botón "+ Nuevo evento".</p>
+            </div>
+
+            <!-- Panel Qué ofrecemos (recursos_destacados) -->
+            <div id="panel-ofrecemos" class="admin-tab-panel" hidden>
+                <div class="admin-panel-header">
+                    <h1>Qué ofrecemos</h1>
+                    <button type="button" id="btn-nuevo-recurso" class="btn-admin">+ Nueva tarjeta</button>
+                </div>
+                <p class="admin-login-ayuda">Tarjetas del carrusel "Qué ofrecemos" de la Home. El orden es numérico (menor primero); solo las tarjetas "Publicada" se ven en el sitio.</p>
+
+                <p id="panel-ofrecemos-mensaje" class="admin-mensaje" hidden></p>
+                <p id="panel-ofrecemos-accion" class="admin-exito" hidden></p>
+                <p id="panel-ofrecemos-cargando" class="admin-mensaje">Cargando tarjetas...</p>
+
+                <div class="admin-tabla-wrap">
+                    <table class="admin-tabla" id="tabla-ofrecemos" hidden>
+                        <thead>
+                            <tr>
+                                <th>Imagen</th>
+                                <th>Título</th>
+                                <th>Orden</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-ofrecemos-body"></tbody>
+                    </table>
+                </div>
+
+                <p id="lista-ofrecemos-vacia" class="admin-mensaje" hidden>Todavía no hay tarjetas cargadas. Creá la primera con el botón "+ Nueva tarjeta".</p>
+            </div>
+
+            <!-- Panel Ciencia ciudadana (preguntas_ciencia_ciudadana) -->
+            <div id="panel-ciencia" class="admin-tab-panel" hidden>
+                <div class="admin-panel-header">
+                    <h1>Ciencia ciudadana</h1>
+                    <button type="button" id="btn-nueva-pregunta" class="btn-admin">+ Nueva pregunta</button>
+                </div>
+                <p class="admin-login-ayuda">Preguntas editoriales de la sección "Ciencia ciudadana" de la Home. El orden es numérico (menor primero); solo las preguntas "Publicada" se ven en el sitio. Si la tabla <code>preguntas_ciencia_ciudadana</code> todavía no existe en Supabase (ver <code>/redesign/sql/redesign_03_preguntas_ciencia_ciudadana.sql</code>), esta sección muestra un aviso y el sitio sigue mostrando las 4 preguntas de siempre.</p>
+
+                <p id="panel-ciencia-mensaje" class="admin-mensaje" hidden></p>
+                <p id="panel-ciencia-accion" class="admin-exito" hidden></p>
+                <p id="panel-ciencia-cargando" class="admin-mensaje">Cargando preguntas...</p>
+
+                <div class="admin-tabla-wrap">
+                    <table class="admin-tabla" id="tabla-ciencia" hidden>
+                        <thead>
+                            <tr>
+                                <th>Pregunta</th>
+                                <th>Orden</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-ciencia-body"></tbody>
+                    </table>
+                </div>
+
+                <p id="lista-ciencia-vacia" class="admin-mensaje" hidden>Todavía no hay preguntas cargadas. Creá la primera con el botón "+ Nueva pregunta".</p>
+            </div>
+
+            <!-- Panel Equipo -->
+            <div id="panel-equipo" class="admin-tab-panel" hidden>
+                <div class="admin-panel-header">
+                    <h1>Equipo</h1>
+                    <button type="button" id="btn-nuevo-integrante" class="btn-admin">+ Nuevo integrante</button>
+                </div>
+                <p class="admin-login-ayuda">Integrantes mostrados en "Quiénes somos". El orden es numérico (menor primero); solo los integrantes "Publicado" se ven en el sitio. Si no se sube una foto nueva, el sitio sigue usando la foto local actual de esa persona. Si la tabla <code>equipo</code> todavía no existe en Supabase (ver <code>/redesign/sql/redesign_04_equipo.sql</code>), esta sección muestra un aviso y el sitio sigue mostrando el equipo actual tal cual está en el HTML.</p>
+
+                <p id="panel-equipo-mensaje" class="admin-mensaje" hidden></p>
+                <p id="panel-equipo-accion" class="admin-exito" hidden></p>
+                <p id="panel-equipo-cargando" class="admin-mensaje">Cargando equipo...</p>
+
+                <div class="admin-tabla-wrap">
+                    <table class="admin-tabla" id="tabla-equipo" hidden>
+                        <thead>
+                            <tr>
+                                <th>Foto</th>
+                                <th>Nombre</th>
+                                <th>Orden</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-equipo-body"></tbody>
+                    </table>
+                </div>
+
+                <p id="lista-equipo-vacia" class="admin-mensaje" hidden>Todavía no hay integrantes cargados en Supabase. Creá el primero con el botón "+ Nuevo integrante".</p>
+            </div>
+
+            <!-- Panel Materiales -->
+            <div id="panel-materiales" class="admin-tab-panel" hidden>
+                <div class="admin-panel-header">
+                    <h1>Materiales</h1>
+                </div>
+                <p class="admin-login-ayuda">Comunidad de WhatsApp y email de contacto que se muestran en <code>/materiales/</code>. Mientras "Link de WhatsApp" quede vacío, el sitio muestra el aviso "(pendiente)" en vez de un enlace roto.</p>
+
+                <p id="materiales-config-mensaje" class="admin-mensaje" hidden></p>
+                <p id="materiales-config-exito" class="admin-exito" hidden></p>
+                <p id="materiales-config-cargando" class="admin-mensaje">Cargando configuración...</p>
+
+                <form id="form-materiales-config" class="admin-form admin-form--estatica" hidden novalidate>
+                    <label class="admin-campo">
+                        <span>Link de la comunidad de WhatsApp (opcional)</span>
+                        <input type="url" id="materiales-config-whatsapp" placeholder="https://chat.whatsapp.com/...">
+                    </label>
+
+                    <label class="admin-campo">
+                        <span>Email de contacto (opcional)</span>
+                        <input type="email" id="materiales-config-email" placeholder="contacto@kalulu.org">
+                    </label>
+
+                    <p id="materiales-config-form-error" class="admin-error" hidden></p>
+                    <p id="materiales-config-form-guardando" class="admin-mensaje" hidden>Guardando...</p>
+
+                    <div class="admin-form-acciones">
+                        <button type="submit" id="btn-guardar-materiales-config" class="btn-admin">Guardar cambios</button>
+                    </div>
+                </form>
+
+                <div class="admin-panel-header" style="margin-top:2.5rem;">
+                    <h1>Documentos</h1>
+                    <button type="button" id="btn-nuevo-material" class="btn-admin">+ Nuevo material</button>
+                </div>
+                <p class="admin-login-ayuda">Documentos mostrados en la biblioteca de <code>/materiales/</code>, agrupados por categoría. Solo los "Publicado" se ven en el sitio. Si un material no tiene archivo subido todavía, en el sitio aparece con los botones "Ver"/"Descargar" deshabilitados y la leyenda "Disponible próximamente".</p>
+
+                <p id="panel-materiales-mensaje" class="admin-mensaje" hidden></p>
+                <p id="panel-materiales-accion" class="admin-exito" hidden></p>
+                <p id="panel-materiales-cargando" class="admin-mensaje">Cargando materiales...</p>
+
+                <div class="admin-tabla-wrap">
+                    <table class="admin-tabla" id="tabla-materiales" hidden>
+                        <thead>
+                            <tr>
+                                <th>Archivo</th>
+                                <th>Título</th>
+                                <th>Categoría</th>
+                                <th>Orden</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-materiales-body"></tbody>
+                    </table>
+                </div>
+
+                <p id="lista-materiales-vacia" class="admin-mensaje" hidden>Todavía no hay materiales cargados. Creá el primero con el botón "+ Nuevo material".</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Formulario crear / editar noticia -->
+    <div id="form-noticia-overlay" class="admin-overlay" hidden>
+        <form id="form-noticia" class="admin-form" novalidate>
+            <h2 id="form-noticia-titulo">Nueva noticia</h2>
+            <input type="hidden" id="campo-id">
+            <input type="hidden" id="campo-imagen-url-actual">
+
+            <label class="admin-campo">
+                <span>Título*</span>
+                <input type="text" id="campo-titulo" maxlength="200" required>
+            </label>
+
+            <label class="admin-campo">
+                <span>Descripción</span>
+                <textarea id="campo-descripcion" rows="4" maxlength="2000"></textarea>
+            </label>
+
+            <label class="admin-campo">
+                <span>Fecha*</span>
+                <input type="date" id="campo-fecha" required>
+            </label>
+
+            <label class="admin-campo">
+                <span>Link (opcional)</span>
+                <input type="url" id="campo-link" placeholder="https://...">
+            </label>
+
+            <label class="admin-campo">
+                <span>Imagen (opcional — JPG, PNG o WEBP, máx. 5MB)</span>
+                <input type="file" id="campo-imagen" accept="image/jpeg,image/png,image/webp">
+            </label>
+            <p id="imagen-error" class="admin-error" hidden></p>
+
+            <div id="preview-imagen-wrap" class="admin-preview-imagen" hidden>
+                <img id="preview-imagen" alt="Vista previa de la imagen">
+                <button type="button" id="btn-quitar-imagen" class="btn-admin-secundario">Quitar imagen</button>
+            </div>
+
+            <label class="admin-checkbox">
+                <input type="checkbox" id="campo-publicada">
+                <span>Publicada (visible en el sitio)</span>
+            </label>
+
+            <p id="form-error" class="admin-error" hidden></p>
+            <p id="form-guardando" class="admin-mensaje" hidden>Guardando...</p>
+
+            <div class="admin-form-acciones">
+                <button type="submit" id="btn-guardar" class="btn-admin">Guardar</button>
+                <button type="button" id="btn-cancelar" class="btn-admin-secundario">Cancelar</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Formulario crear / editar evento -->
+    <div id="form-evento-overlay" class="admin-overlay" hidden>
+        <form id="form-evento" class="admin-form" novalidate>
+            <h2 id="form-evento-titulo">Nuevo evento</h2>
+            <input type="hidden" id="campo-evento-id">
+            <input type="hidden" id="campo-evento-imagen-url-actual">
+
+            <label class="admin-campo">
+                <span>Título*</span>
+                <input type="text" id="campo-evento-titulo" maxlength="200" required>
+            </label>
+
+            <label class="admin-campo">
+                <span>Descripción</span>
+                <textarea id="campo-evento-descripcion" rows="4" maxlength="2000"></textarea>
+            </label>
+
+            <label class="admin-campo">
+                <span>Fecha*</span>
+                <input type="date" id="campo-evento-fecha" required>
+            </label>
+
+            <label class="admin-campo">
+                <span>Hora de inicio (opcional)</span>
+                <input type="time" id="campo-evento-hora">
+            </label>
+
+            <label class="admin-campo">
+                <span>Hora de finalización (opcional)</span>
+                <input type="time" id="campo-evento-hora-fin">
+            </label>
+            <p id="hora-fin-error" class="admin-error" hidden></p>
+
+            <label class="admin-campo">
+                <span>Link de inscripción (opcional)</span>
+                <input type="url" id="campo-evento-link" placeholder="https://...">
+            </label>
+
+            <label class="admin-campo">
+                <span>Imagen (opcional — JPG, PNG o WEBP, máx. 5MB)</span>
+                <input type="file" id="campo-evento-imagen" accept="image/jpeg,image/png,image/webp">
+            </label>
+            <p id="imagen-evento-error" class="admin-error" hidden></p>
+
+            <div id="preview-imagen-evento-wrap" class="admin-preview-imagen" hidden>
+                <img id="preview-imagen-evento" alt="Vista previa de la imagen">
+                <button type="button" id="btn-quitar-imagen-evento" class="btn-admin-secundario">Quitar imagen</button>
+            </div>
+
+            <label class="admin-checkbox">
+                <input type="checkbox" id="campo-evento-publicado">
+                <span>Publicado (visible en el sitio)</span>
+            </label>
+
+            <p id="form-evento-error" class="admin-error" hidden></p>
+            <p id="form-evento-guardando" class="admin-mensaje" hidden>Guardando...</p>
+
+            <div class="admin-form-acciones">
+                <button type="submit" id="btn-guardar-evento" class="btn-admin">Guardar</button>
+                <button type="button" id="btn-cancelar-evento" class="btn-admin-secundario">Cancelar</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Formulario crear / editar tarjeta de "Qué ofrecemos" -->
+    <div id="form-recurso-overlay" class="admin-overlay" hidden>
+        <form id="form-recurso" class="admin-form" novalidate>
+            <h2 id="form-recurso-titulo">Nueva tarjeta</h2>
+            <input type="hidden" id="campo-recurso-id">
+            <input type="hidden" id="campo-recurso-imagen-url-actual">
+
+            <label class="admin-campo">
+                <span>Título*</span>
+                <input type="text" id="campo-recurso-titulo" maxlength="120" required>
+            </label>
+
+            <label class="admin-campo">
+                <span>Descripción</span>
+                <textarea id="campo-recurso-descripcion" rows="3" maxlength="400"></textarea>
+            </label>
+
+            <label class="admin-campo">
+                <span>Link (opcional)</span>
+                <input type="url" id="campo-recurso-link" placeholder="https://...">
+            </label>
+
+            <label class="admin-campo">
+                <span>Texto del botón (opcional, si hay link)</span>
+                <input type="text" id="campo-recurso-cta-texto" maxlength="40" placeholder="Ver más">
+            </label>
+
+            <label class="admin-campo">
+                <span>Orden*</span>
+                <input type="number" id="campo-recurso-orden" min="0" step="1" required value="0">
+            </label>
+
+            <label class="admin-campo">
+                <span>Imagen (opcional — JPG, PNG o WEBP, máx. 5MB)</span>
+                <input type="file" id="campo-recurso-imagen" accept="image/jpeg,image/png,image/webp">
+            </label>
+            <p id="imagen-recurso-error" class="admin-error" hidden></p>
+
+            <div id="preview-imagen-recurso-wrap" class="admin-preview-imagen" hidden>
+                <img id="preview-imagen-recurso" alt="Vista previa de la imagen">
+                <button type="button" id="btn-quitar-imagen-recurso" class="btn-admin-secundario">Quitar imagen</button>
+            </div>
+
+            <label class="admin-checkbox">
+                <input type="checkbox" id="campo-recurso-publicado">
+                <span>Publicada (visible en el sitio)</span>
+            </label>
+
+            <p id="form-recurso-error" class="admin-error" hidden></p>
+            <p id="form-recurso-guardando" class="admin-mensaje" hidden>Guardando...</p>
+
+            <div class="admin-form-acciones">
+                <button type="submit" id="btn-guardar-recurso" class="btn-admin">Guardar</button>
+                <button type="button" id="btn-cancelar-recurso" class="btn-admin-secundario">Cancelar</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Formulario crear / editar pregunta de "Ciencia ciudadana" -->
+    <div id="form-pregunta-overlay" class="admin-overlay" hidden>
+        <form id="form-pregunta" class="admin-form" novalidate>
+            <h2 id="form-pregunta-titulo">Nueva pregunta</h2>
+            <input type="hidden" id="campo-pregunta-id">
+
+            <label class="admin-campo">
+                <span>Pregunta*</span>
+                <textarea id="campo-pregunta-texto" rows="2" maxlength="300" required></textarea>
+            </label>
+
+            <label class="admin-campo">
+                <span>Orden*</span>
+                <input type="number" id="campo-pregunta-orden" min="0" step="1" required value="0">
+            </label>
+
+            <label class="admin-checkbox">
+                <input type="checkbox" id="campo-pregunta-publicada">
+                <span>Publicada (visible en el sitio)</span>
+            </label>
+
+            <p id="form-pregunta-error" class="admin-error" hidden></p>
+            <p id="form-pregunta-guardando" class="admin-mensaje" hidden>Guardando...</p>
+
+            <div class="admin-form-acciones">
+                <button type="submit" id="btn-guardar-pregunta" class="btn-admin">Guardar</button>
+                <button type="button" id="btn-cancelar-pregunta" class="btn-admin-secundario">Cancelar</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Formulario crear / editar integrante del equipo -->
+    <div id="form-integrante-overlay" class="admin-overlay" hidden>
+        <form id="form-integrante" class="admin-form" novalidate>
+            <h2 id="form-integrante-titulo">Nuevo integrante</h2>
+            <input type="hidden" id="campo-integrante-id">
+            <input type="hidden" id="campo-integrante-imagen-url-actual">
+
+            <label class="admin-campo">
+                <span>Nombre*</span>
+                <input type="text" id="campo-integrante-nombre" maxlength="120" required>
+            </label>
+
+            <label class="admin-campo">
+                <span>Cargo / descripción</span>
+                <textarea id="campo-integrante-descripcion" rows="3" maxlength="400"></textarea>
+            </label>
+
+            <label class="admin-campo">
+                <span>Link (opcional)</span>
+                <input type="url" id="campo-integrante-link" placeholder="https://...">
+            </label>
+
+            <label class="admin-campo">
+                <span>Orden*</span>
+                <input type="number" id="campo-integrante-orden" min="0" step="1" required value="0">
+            </label>
+
+            <label class="admin-campo">
+                <span>Foto (opcional — JPG, PNG o WEBP, máx. 5MB. Si se deja en blanco, el sitio sigue usando la foto local actual de esta persona.)</span>
+                <input type="file" id="campo-integrante-imagen" accept="image/jpeg,image/png,image/webp">
+            </label>
+            <p id="imagen-integrante-error" class="admin-error" hidden></p>
+
+            <div id="preview-imagen-integrante-wrap" class="admin-preview-imagen" hidden>
+                <img id="preview-imagen-integrante" alt="Vista previa de la foto">
+                <button type="button" id="btn-quitar-imagen-integrante" class="btn-admin-secundario">Quitar foto</button>
+            </div>
+
+            <label class="admin-checkbox">
+                <input type="checkbox" id="campo-integrante-publicada">
+                <span>Publicado (visible en el sitio)</span>
+            </label>
+
+            <p id="form-integrante-error" class="admin-error" hidden></p>
+            <p id="form-integrante-guardando" class="admin-mensaje" hidden>Guardando...</p>
+
+            <div class="admin-form-acciones">
+                <button type="submit" id="btn-guardar-integrante" class="btn-admin">Guardar</button>
+                <button type="button" id="btn-cancelar-integrante" class="btn-admin-secundario">Cancelar</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Formulario crear / editar material -->
+    <div id="form-material-overlay" class="admin-overlay" hidden>
+        <form id="form-material" class="admin-form" novalidate>
+            <h2 id="form-material-titulo">Nuevo material</h2>
+            <input type="hidden" id="campo-material-id">
+            <input type="hidden" id="campo-material-archivo-path-actual">
+            <input type="hidden" id="campo-material-nombre-archivo-actual">
+
+            <label class="admin-campo">
+                <span>Título*</span>
+                <input type="text" id="campo-material-titulo" maxlength="150" required>
+            </label>
+
+            <label class="admin-campo">
+                <span>Descripción (opcional)</span>
+                <textarea id="campo-material-descripcion" rows="3" maxlength="400"></textarea>
+            </label>
+
+            <label class="admin-campo">
+                <span>Categoría*</span>
+                <select id="campo-material-categoria" required>
+                    <option value="cuadernillos">Cuadernillos</option>
+                    <option value="impresion">Cuadernillos para imprimir</option>
+                    <option value="guias">Guías</option>
+                    <option value="juegos">Juegos</option>
+                </select>
+            </label>
+
+            <label class="admin-campo">
+                <span>Orden*</span>
+                <input type="number" id="campo-material-orden" min="0" step="1" required value="0">
+            </label>
+
+            <label class="admin-campo">
+                <span>Archivo (PDF, máx. 15MB)</span>
+                <input type="file" id="campo-material-archivo" accept="application/pdf">
+            </label>
+            <p id="archivo-material-error" class="admin-error" hidden></p>
+
+            <div id="archivo-material-actual-wrap" class="admin-archivo-actual" hidden>
+                <span id="archivo-material-actual-nombre"></span>
+                <button type="button" id="btn-quitar-archivo-material" class="btn-admin-secundario">Quitar archivo</button>
+            </div>
+
+            <label class="admin-checkbox">
+                <input type="checkbox" id="campo-material-publicado">
+                <span>Publicado (visible en el sitio)</span>
+            </label>
+
+            <p id="form-material-error" class="admin-error" hidden></p>
+            <p id="form-material-guardando" class="admin-mensaje" hidden>Guardando...</p>
+
+            <div class="admin-form-acciones">
+                <button type="submit" id="btn-guardar-material" class="btn-admin">Guardar</button>
+                <button type="button" id="btn-cancelar-material" class="btn-admin-secundario">Cancelar</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="../../supabase-config.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+    <script src="admin.js" defer></script>
+    <script src="admin-extra.js" defer></script>
+</body>
+</html>
