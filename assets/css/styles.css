@@ -507,10 +507,21 @@ textarea:focus-visible,
   box-shadow: var(--sombra-m);
 }
 
-.kalulu-sticky__media img,
-.kalulu-sticky__media video { width: 100%; border-radius: var(--radio-l); }
+.kalulu-sticky__media img { width: 100%; border-radius: var(--radio-l); }
 
 .kalulu-sticky__media a { display: block; }
+
+/* Panel "Pensado para el aula real": antes tenía un video vertical; ahora
+   es una foto fija. Se fuerza un aspect-ratio moderado (en vez de dejar
+   el alto natural de esta foto puntual, bastante más panorámica que las
+   otras dos) para que ocupe una presencia similar a la que tenían el
+   video y los otros paneles, con un recorte prolijo — nunca estirada. */
+.kalulu-sticky__media--foto-aula { aspect-ratio: 3 / 2; }
+.kalulu-sticky__media--foto-aula img {
+  height: 100%;
+  object-fit: cover;
+  object-position: center 42%;
+}
 
 .kalulu-sticky__paso {
   display: inline-flex;
