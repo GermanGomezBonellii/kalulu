@@ -99,9 +99,10 @@
   --header-alto: 88px;
 }
 
-@media (max-width: 480px) {
-  :root { --header-alto: 72px; }
-}
+/* El ajuste de --header-alto y el resto de los overrides mobile del
+   header viven consolidados en la sección 14 (final del archivo), junto
+   con el resto de los ajustes de mobile, para no repartir el mismo
+   breakpoint en varios lugares del archivo. */
 
 /* ---------------------------------------------------------------------
    2. Reset básico
@@ -266,6 +267,16 @@ textarea:focus-visible,
   border-radius: var(--radio-pill);
 }
 
+/* Par de etiquetas alternativas (texto completo / texto corto) para el
+   mismo elemento, usado en los botones del header: por defecto se ve la
+   versión completa y la corta queda oculta; el breakpoint mobile (ver
+   sección 14, al final del archivo) invierte cuál se muestra. Nunca hay
+   dos botones — el link/href es siempre el mismo, solo cambia el texto
+   visible. La versión corta lleva aria-hidden y el <a> que las contiene
+   tiene su propio aria-label con el texto completo, así el nombre
+   accesible no cambia según el ancho de pantalla. */
+.label-mobile { display: none; }
+
 /* =====================================================================
    3. Header
    ===================================================================== */
@@ -322,13 +333,6 @@ textarea:focus-visible,
   white-space: nowrap;
   padding: 0.6rem 1.3rem;
   font-size: 0.95rem;
-}
-
-@media (max-width: 480px) {
-  .site-header__materiales { padding: 0.55rem 0.9rem; font-size: 0.85rem; }
-  .site-header__logo img { height: 52px; }
-  .site-header__acciones { gap: var(--space-3); }
-  .site-header__youtube { font-size: 0.85rem; padding: 0.4rem 0.1rem; }
 }
 
 /* =====================================================================
@@ -1053,11 +1057,9 @@ textarea:focus-visible,
   font-size: clamp(2.1rem, 1.65rem + 1.7vw, 2.9rem);
   font-weight: var(--peso-titulo-fuerte);
 }
-/* Mobile: bastante más chico que el piso pensado para desktop. */
-@media (max-width: 599px) {
-  .ciencia-investigacion__linea-liviana { font-size: clamp(1.4rem, 1.2rem + 2vw, 1.9rem); }
-  .ciencia-investigacion__linea-fuerte { font-size: clamp(1.5rem, 1.25rem + 2.2vw, 2rem); }
-}
+/* El tamaño mobile de estas dos líneas (todavía más chico que el piso de
+   arriba) vive consolidado en la sección 14, junto con el resto de los
+   ajustes específicos de mobile. */
 /* Único acento verde/lima de toda la sección: una línea fina bajo "con el
    aula", nada más. */
 .ciencia-investigacion__resaltado {
@@ -1275,7 +1277,144 @@ textarea:focus-visible,
 /* =====================================================================
    13. Utilidades responsive generales
    ===================================================================== */
-@media (max-width: 640px) {
-  :root { --padding-lateral: 1rem; }
-  .seccion { padding-block: clamp(2rem, 1.7rem + 2vw, 3rem); }
+/* --padding-lateral se mantiene en el valor por defecto de :root (1.25rem
+   / 20px) en todos los anchos: ya cae dentro del rango cómodo de margen
+   lateral para mobile, así que no hace falta un override propio acá. */
+
+/* =====================================================================
+   14. Mobile — ajuste específico de escala y espaciado
+   -----------------------------------------------------------------------
+   El desktop (>768px) NO se toca en esta sección: mantiene exactamente
+   la escala ya definida en :root y en cada componente más arriba. Estos
+   dos breakpoints son el único lugar del archivo donde se reduce todavía
+   más la tipografía/el espaciado para pantallas chicas — se consolidan
+   acá (en vez de repartidos por el archivo) los breakpoints que antes
+   vivían sueltos en Header (480px), Ciencia-investigación (599px) y las
+   utilidades generales (640px).
+   ===================================================================== */
+@media (max-width: 768px) {
+  :root {
+    /* Escala tipográfica: mismo criterio que en desktop (clamp rem+vw)
+       pero con techos bastante más bajos, para que ningún título se
+       sienta "de escritorio" en un teléfono o una tablet chica. */
+    --tamano-h1: clamp(1.75rem, 1.5rem + 1.6vw, 2.2rem);
+    --tamano-h2: clamp(1.4rem, 1.25rem + 1vw, 1.75rem);
+    --tamano-h3: clamp(1rem, 0.95rem + 0.35vw, 1.1rem);
+    --tamano-destacado: clamp(1rem, 0.97rem + 0.3vw, 1.1rem);
+    /* Aire entre secciones: desktop puede llegar a 80px: acá el techo
+       baja a ~47px y el piso a ~38px (rango pedido: ~40-56px). */
+    --espaciado-seccion: clamp(2.25rem, 1.9rem + 2.2vw, 3.25rem);
+    --header-alto: 72px;
+    /* Radios: mismo criterio "sistema" que la tipografía — se baja acá y
+       se propaga sola a cada tarjeta/bloque que ya usa esta variable,
+       sin tocar cada selector por separado. */
+    --radio-m: 12px;
+  }
+
+  /* Botones: más compactos en todo el sitio (el header tiene su propio
+     tamaño, todavía más chico, más abajo). */
+  .btn { padding: 0.65rem 1rem; font-size: 0.92rem; gap: 0.4rem; }
+  .btn--grande { padding: 0.7rem 1.3rem; font-size: 0.95rem; }
+
+  /* Header: ya trae su propio tamaño reducido (ver 480px más abajo);
+     acá solo se ajusta el espacio entre logo y acciones. */
+  .site-header__acciones { gap: var(--space-3); }
+
+  /* Hero: nunca 100vh en mobile — el alto lo define el contenido +
+     un padding moderado, así el contenido "aparece" más rápido. */
+  .hero { min-height: auto; }
+  .hero__contenido { padding-block: var(--space-5); }
+  .hero__subtitulo { margin-top: var(--space-3); }
+  .hero__cta { margin-top: var(--space-4); }
+
+  /* Kalulu-intro: el bloque de transición Hero -> sticky no necesita
+     tanto aire propio en mobile. */
+  .kalulu-intro { padding-block: var(--space-5); min-height: 0; }
+
+  /* Tarjetas y bloques: radios, paddings y separaciones más discretos,
+     sin perder legibilidad — nunca tarjetas "gigantes" con poco texto. */
+  .noticias__bento { gap: var(--space-3); margin-top: var(--space-5); }
+  .noticia-card__contenido { padding: var(--space-3); gap: 0.4rem; }
+  .noticias__grid-secundaria .noticia-card { min-height: 6rem; }
+
+  .materiales { padding: var(--space-5) var(--space-4); gap: var(--space-3); border-radius: var(--radio-m); }
+
+  .ofrecemos__carrusel-wrap { margin-top: var(--space-4); }
+  .ofrecemos__tarjeta-cuerpo { padding: var(--space-3); gap: 0.4rem; }
+
+  .ciencia-preguntas__grid { gap: var(--space-3); margin-top: var(--space-5); }
+  .ciencia-preguntas__tarjeta { padding: var(--space-4); }
+  .ciencia-preguntas__tarjeta::before { margin-bottom: var(--space-3); }
+
+  .materiales-grid { gap: var(--space-3); }
+  .material-card { padding: var(--space-3); gap: 0.5rem; }
+
+  .equipo__grid { gap: var(--space-3); margin-top: var(--space-5); }
+  .equipo__miembro-cuerpo { padding: var(--space-3); }
+
+  /* Ciencia investigación (bloque violeta): segunda reducción, específica
+     de mobile, sobre lo ya refinado para desktop/tablet. El statement
+     sigue siendo lo más fuerte de la sección pero deja de ocupar
+     prácticamente toda la pantalla. */
+  .ciencia-investigacion { padding-block: var(--space-6) var(--space-5); }
+  .ciencia-investigacion__linea-liviana { font-size: clamp(1.3rem, 1.1rem + 2vw, 1.6rem); }
+  .ciencia-investigacion__linea-fuerte { font-size: clamp(1.4rem, 1.15rem + 2.1vw, 1.7rem); }
+  .ciencia-investigacion__statement h2 { line-height: 1.16; }
+  .ciencia-investigacion__statement p { margin-top: var(--space-2); font-size: 0.95rem; }
+  .ciencia-investigacion__lista { margin-top: var(--space-4); }
+  .ciencia-investigacion__paso {
+    grid-template-columns: 2rem 1fr;
+    gap: var(--space-2);
+    padding: var(--space-3) 0;
+  }
+  .ciencia-investigacion__paso-num { font-size: 1.15rem; }
+  .ciencia-investigacion__paso-texto p { font-size: 0.95rem; line-height: 1.5; }
+  .ciencia-investigacion__cierre {
+    margin-top: var(--space-5);
+    padding-top: var(--space-4);
+    gap: var(--space-3);
+  }
+  .ciencia-investigacion__cierre-texto { font-size: 1.05rem; }
+
+  /* Footer: bloque más contenido — logo y separadores más chicos, sin
+     perder el contacto como elemento visible. */
+  .site-footer { padding-block: var(--space-5) var(--space-4); }
+  .site-footer .contenedor { gap: var(--space-4); }
+  .site-footer__top { gap: var(--space-4); }
+  .site-footer__marca img { width: 110px; }
+  .site-footer h4 { margin-bottom: var(--space-2); }
+  .site-footer__social a { width: 34px; height: 34px; flex: 0 0 34px; }
+  .site-footer__social img { width: 15px; height: 15px; }
+  .site-footer__bottom { padding-top: var(--space-3); font-size: 0.8rem; }
+}
+
+/* Segunda capa, más agresiva, para teléfonos angostos (donde vive el
+   verificado 375 / 390 / 430px). Además de bajar un poco más lo de
+   arriba, acá se resuelve el intercambio de texto largo/corto de los
+   botones del header. */
+@media (max-width: 480px) {
+  :root { --header-alto: 64px; }
+
+  /* Header: nombre completo en desktop/tablet, versión corta en mobile.
+     El href y el <a> son siempre los mismos — solo cambia qué <span> se
+     ve; el aria-label del <a> (ver HTML) mantiene el nombre accesible
+     completo en cualquier ancho. */
+  .label-desktop { display: none; }
+  .label-mobile { display: inline; }
+
+  .site-header__logo img { height: 48px; }
+  .site-header__acciones { gap: var(--space-2); }
+  .site-header__youtube {
+    font-size: 0.85rem;
+    padding: 0.4rem 0.3rem;
+  }
+  .site-header__materiales {
+    padding: 0.5rem 0.85rem;
+    font-size: 0.85rem;
+  }
+
+  /* Un empujón más al statement de Ciencia-investigación y a los pasos,
+     para que en un iPhone SE/mini sigan sintiéndose sobrios. */
+  .ciencia-investigacion__linea-liviana { font-size: 1.3rem; }
+  .ciencia-investigacion__linea-fuerte { font-size: 1.4rem; }
 }
