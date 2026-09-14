@@ -1331,9 +1331,20 @@ textarea:focus-visible,
      acá solo se ajusta el espacio entre logo y acciones. */
   .site-header__acciones { gap: var(--space-3); }
 
-  /* Hero: nunca 100vh en mobile — el alto lo define el contenido +
-     un padding moderado, así el contenido "aparece" más rápido. */
-  .hero { min-height: auto; }
+  /* Hero: HEADER + HERO = una pantalla completa en mobile. El alto no lo
+     da el contenido (eso fue una vuelta anterior) sino el viewport: se
+     resta --header-alto (que en este breakpoint ya es más chico) de
+     100% del alto visible. "svh" (small viewport height, excluye la
+     franja que Safari/Chrome mobile pueden ocultar/mostrar con la barra
+     de direcciones) es el que manda; "vh" queda antes como fallback para
+     navegadores que no lo soportan todavía. Nunca se agranda la
+     tipografía para lograr esto — el equilibrio vertical lo da el
+     centrado (align-items:center, ya heredado de la regla base), no el
+     tamaño del contenido. */
+  .hero {
+    min-height: calc(100vh - var(--header-alto));
+    min-height: calc(100svh - var(--header-alto));
+  }
   .hero__contenido { padding-block: var(--space-5); }
   .hero__subtitulo { margin-top: var(--space-3); }
   .hero__cta { margin-top: var(--space-4); }
