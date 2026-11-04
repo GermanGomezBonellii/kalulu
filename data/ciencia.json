@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "pregunta": "¿Debemos enseñar la cursiva desde el principio?",
+    "orden": 10,
+    "publicada": true
+  },
+  {
+    "id": 2,
+    "pregunta": "¿Sirve usar una letra de cada color o es mejor todo en negro?",
+    "orden": 20,
+    "publicada": true
+  },
+  {
+    "id": 3,
+    "pregunta": "¿Vale la pena usar textos con letras más espaciadas?",
+    "orden": 30,
+    "publicada": true
+  },
+  {
+    "id": 4,
+    "pregunta": "¿Qué precursores de la lectura podemos enseñar en sala de 5?",
+    "orden": 40,
+    "publicada": true
+  }
+]

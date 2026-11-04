@@ -1,0 +1,29 @@
+[
+  {
+    "id": 5,
+    "titulo": "\"Estos experimentos solo se pueden explicar como fenómenos cuánticos macroscópicos\"",
+    "descripcion": "YouTube",
+    "fecha": "2026-08-21",
+    "imagen_url": "https://i.ytimg.com/vi/y90xirpbj4s/maxresdefault.jpg",
+    "link": "https://www.youtube.com/watch?v=y90xirpbj4s",
+    "publicada": true
+  },
+  {
+    "id": 1,
+    "titulo": "“En Argentina solo uno de cada cuatro chicos puede resolver una regla de tres simple”",
+    "descripcion": "Infobae",
+    "fecha": "2026-08-19",
+    "imagen_url": "https://www.infobae.com/resizer/v2/MLWSYGZE3VBUJDGI57TL3VYCTQ.png?auth=28e99c69c4827207ba14f192636e9b55ef5c66995736c9a624342a9cf642d605&smart=true&width=992&height=554&quality=85",
+    "link": "https://www.infobae.com/educacion/2026/04/16/andres-rieznik-en-argentina-solo-uno-de-cada-cuatro-chicos-puede-resolver-una-regla-de-tres-simple/",
+    "publicada": true
+  },
+  {
+    "id": 3,
+    "titulo": "“Cuando quieras aprender algo, desconectate de la PC, de las redes y de los celulares”",
+    "descripcion": "Clarin web",
+    "fecha": "2026-08-19",
+    "imagen_url": "https://www.clarin.com/img/2026/08/11/VEZ7xeQ0d_2000x1500__3.jpg#1786481823704",
+    "link": "https://www.clarin.com/cultura/andres-rieznik-quieras-aprender-desconectate-pc-redes-celulares_0_t83LY7Sy5Z.html",
+    "publicada": true
+  }
+]

@@ -1,0 +1,66 @@
+[
+  {
+    "id": 1,
+    "nombre": "Melina Vladisauskas",
+    "descripcion": "Dra. en Biología, Postdoc en Excello Lab - Collège de France",
+    "imagen_url": "imagenes/melina.jpg",
+    "orden": 10,
+    "publicada": true
+  },
+  {
+    "id": 2,
+    "nombre": "Julia Hermida",
+    "descripcion": "Dra. en Psicología UBA, Profesora adjunta en UNAHUR, Investigadora Asistente en CONICET",
+    "imagen_url": "imagenes/julia.jpeg",
+    "orden": 20,
+    "publicada": true
+  },
+  {
+    "id": 3,
+    "nombre": "Cassandra Potier Watkins",
+    "descripcion": "Investigadora en Neurociencia Cognitiva y Educación (Collège de France), Fundadora de Excello",
+    "imagen_url": "imagenes/cassandra.jpg",
+    "orden": 30,
+    "publicada": true
+  },
+  {
+    "id": 4,
+    "nombre": "Andrés Rieznik",
+    "descripcion": "Dr. en Física, Profesor full time en UTDT, Comunicador científico",
+    "imagen_url": "imagenes/andres.jpg",
+    "orden": 40,
+    "publicada": true
+  },
+  {
+    "id": 5,
+    "nombre": "Stanislas Dehaene",
+    "descripcion": "Investigador en Neurociencia Cognitiva, Prof. en Collège de France, Dir. de NeuroSpin (INSERM-CEA)",
+    "imagen_url": "imagenes/Stanislas.jpg",
+    "orden": 50,
+    "publicada": true
+  },
+  {
+    "id": 6,
+    "nombre": "Agripina Sanchez Menta",
+    "descripcion": "Docente de primaria y Psicopedagoga",
+    "imagen_url": "imagenes/agrispina.jpg",
+    "orden": 60,
+    "publicada": true
+  },
+  {
+    "id": 7,
+    "nombre": "Romina Curto",
+    "descripcion": "Docente y estudiante de psicopedagogía",
+    "imagen_url": "imagenes/Romina.jpg",
+    "orden": 70,
+    "publicada": true
+  },
+  {
+    "id": 8,
+    "nombre": "Marie Lubineau",
+    "descripcion": "Doctora en Ciencias Cognitivas, Postdoctorado en Excello Lab - Collège de France",
+    "imagen_url": "imagenes/marie.jpg",
+    "orden": 80,
+    "publicada": true
+  }
+]

@@ -124,7 +124,7 @@
             var recursos = resp.data || [];
             renderizar(recursos.length > 0 ? recursos : FALLBACK);
         } catch (err) {
-            console.warn('No se pudo cargar "Qué ofrecemos" desde Supabase, se usa el contenido de reserva:', err);
+            console.warn('No se pudo cargar "Qué ofrecemos" desde data/*.json, se usa el contenido de reserva:', err);
             renderizar(FALLBACK);
         } finally {
             iniciarNavegacion();

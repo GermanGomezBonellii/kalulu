@@ -234,7 +234,7 @@
         } catch (err) {
             // Tabla todavía no creada (ver sql/redesign_05_materiales.sql),
             // sin conexión, etc.: se usa el catálogo de referencia.
-            console.warn('No se pudieron cargar los materiales desde Supabase, se usa el catálogo de referencia:', err);
+            console.warn('No se pudieron cargar los materiales desde data/*.json, se usa el catálogo de referencia:', err);
             renderizar(prepararRespaldo());
         }
     }

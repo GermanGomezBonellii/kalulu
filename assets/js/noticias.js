@@ -30,9 +30,9 @@
         }
     }
 
-    function crearTarjeta(noticia, destacada) {
+    function crearTarjeta(noticia) {
         var card = document.createElement('article');
-        card.className = destacada ? 'noticia-card noticia-card--destacada' : 'noticia-card';
+        card.className = 'noticia-card';
 
         if (noticia.imagen_url && urlValida(noticia.imagen_url)) {
             var img = document.createElement('img');
@@ -111,24 +111,17 @@
                 return;
             }
 
-            var destacada = noticias[0];
-            var resto = noticias.slice(1);
+            // Solo las 3 más recientes en la home: la consulta ya viene
+            // ordenada por fecha DESC, acá solo se recorta el render.
+            var masRecientes = noticias.slice(0, 3);
 
             contenedor.innerHTML = '';
-            var bento = document.createElement('div');
-            bento.className = 'noticias__bento';
-            bento.appendChild(crearTarjeta(destacada, true));
-
-            if (resto.length > 0) {
-                var grid = document.createElement('div');
-                grid.className = 'noticias__grid-secundaria';
-                resto.slice(0, 3).forEach(function (n) { grid.appendChild(crearTarjeta(n, false)); });
-                bento.appendChild(grid);
-            }
-
-            contenedor.appendChild(bento);
+            var grid = document.createElement('div');
+            grid.className = 'noticias-grid';
+            masRecientes.forEach(function (n) { grid.appendChild(crearTarjeta(n)); });
+            contenedor.appendChild(grid);
         } catch (err) {
-            console.error('Error al cargar noticias desde Supabase:', err);
+            console.error('Error al cargar noticias desde data/*.json:', err);
             mostrarMensaje(contenedor, 'No pudimos cargar las noticias en este momento. Intentá más tarde.', true);
         }
     }

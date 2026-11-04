@@ -139,7 +139,7 @@
         } catch (err) {
             // Tabla todavía no creada (ver sql/redesign_04_equipo.sql), sin
             // conexión, etc.: se usa el contenido de reserva.
-            console.warn('No se pudo cargar "Quiénes somos" desde Supabase, se usa el contenido por defecto:', err);
+            console.warn('No se pudo cargar "Quiénes somos" desde data/*.json, se usa el contenido por defecto:', err);
             renderizar(FALLBACK);
         }
     }

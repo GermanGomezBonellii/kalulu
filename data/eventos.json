@@ -1,0 +1,24 @@
+[
+  {
+    "id": 1,
+    "titulo": "EVENTO DE PRUEBA",
+    "descripcion": "Prueba",
+    "fecha": "2026-08-25",
+    "hora": null,
+    "hora_fin": null,
+    "imagen_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqz5zSGaq2BHWBaHsKnzrIfIF3ZzaoYW1uuO2ws0qeOg&s=10",
+    "link_inscripcion": null,
+    "publicado": true
+  },
+  {
+    "id": 2,
+    "titulo": "Evento n2",
+    "descripcion": "probando cosas",
+    "fecha": "2026-08-24",
+    "hora": "07:30",
+    "hora_fin": "20:20",
+    "imagen_url": "https://radbpcxkzeejjqlxnxpx.supabase.co/storage/v1/object/public/eventos-imagenes/eventos/b53d15d9-cad8-4532-87f6-4d70eb478d1c.png",
+    "link_inscripcion": "https://kalulu.excellolab.org/cienciaciudadana-argentina/",
+    "publicado": true
+  }
+]

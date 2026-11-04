@@ -86,7 +86,7 @@
         } catch (err) {
             // Tabla todavía no creada, RLS no configurada, sin conexión, etc.
             // Se conserva el contenido de fallback silenciosamente.
-            console.warn('No se pudo cargar la configuración del Hero desde Supabase, se usa el contenido por defecto:', err);
+            console.warn('No se pudo cargar la configuración del Hero desde data/*.json, se usa el contenido por defecto:', err);
         } finally {
             el.hero.classList.remove('hero--cargando');
         }

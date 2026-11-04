@@ -1,0 +1,52 @@
+[
+  {
+    "id": 5,
+    "titulo": "Cuadernillos y materiales",
+    "descripcion": "Cuadernillos y materiales para todos tus alumnos.",
+    "imagen_url": null,
+    "link": null,
+    "texto_boton": null,
+    "publicado": true,
+    "orden": 10
+  },
+  {
+    "id": 1,
+    "titulo": "Juegos de lectura",
+    "descripcion": "Juegos de cartas para reforzar habilidades de lectura de forma divertida.",
+    "imagen_url": null,
+    "link": null,
+    "texto_boton": null,
+    "publicado": true,
+    "orden": 20
+  },
+  {
+    "id": 6,
+    "titulo": "Guía pedagógica",
+    "descripcion": "Guía pedagógica detallada para acompañar cada paso del proceso.",
+    "imagen_url": null,
+    "link": null,
+    "texto_boton": null,
+    "publicado": true,
+    "orden": 30
+  },
+  {
+    "id": 2,
+    "titulo": "Cursos online",
+    "descripcion": "Acceso completo a cursos online asincrónicos y capacitaciones.",
+    "imagen_url": null,
+    "link": null,
+    "texto_boton": null,
+    "publicado": true,
+    "orden": 40
+  },
+  {
+    "id": 4,
+    "titulo": "Eventos presenciales",
+    "descripcion": "Eventos presenciales con especialistas nacionales e internacionales.",
+    "imagen_url": null,
+    "link": null,
+    "texto_boton": null,
+    "publicado": true,
+    "orden": 60
+  }
+]

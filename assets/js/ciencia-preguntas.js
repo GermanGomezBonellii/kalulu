@@ -69,7 +69,7 @@
         } catch (err) {
             // Tabla todavía no creada (ver sql/redesign_03_...sql), sin
             // conexión, etc.: se conserva el contenido de reserva.
-            console.warn('No se pudieron cargar las preguntas de Ciencia ciudadana desde Supabase, se usa el contenido por defecto:', err);
+            console.warn('No se pudieron cargar las preguntas de Ciencia ciudadana desde data/*.json, se usa el contenido por defecto:', err);
             renderizar(FALLBACK);
         }
     }

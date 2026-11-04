@@ -589,20 +589,26 @@ textarea:focus-visible,
 }
 
 /* =====================================================================
-   7. Noticias — composición editorial: la destacada y las secundarias
-   viven en UNA sola grilla (no dos bloques separados), para que se
-   sientan parte de la misma pieza en vez de "la grande + una lista
-   aparte con espacio muerto alrededor".
+   7. Noticias — grilla simple: las 3 noticias más recientes con la misma
+   jerarquía visual (sin destacada). 1 columna en mobile, 2 en tablet, 3
+   en desktop. Nada de "bento" ni tarjetas de proporciones distintas.
    ===================================================================== */
 .noticias__estado { text-align: center; padding: var(--space-5) 0; color: var(--color-texto-suave); }
 .noticias__estado--error { color: var(--color-error); }
 
-.noticias__bento {
+.noticias-grid {
   display: grid;
-  /* ~24px: mismo valor para el gap entre columnas en desktop y para el
-     espacio entre las 3 noticias apiladas en mobile/tablet. */
+  grid-template-columns: 1fr;
   gap: var(--space-4);
   margin-top: var(--space-6);
+}
+
+@media (min-width: 640px) {
+  .noticias-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (min-width: 900px) {
+  .noticias-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 
 .noticia-card {
@@ -612,92 +618,58 @@ textarea:focus-visible,
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  box-shadow: var(--sombra-s);
   transition: box-shadow var(--transicion-rapida), transform var(--transicion-rapida);
   /* Nunca alturas forzadas: cada card mide lo que su contenido necesita. */
 }
-.noticia-card:hover { box-shadow: var(--sombra-m); transform: translateY(-2px); }
+.noticia-card:hover { box-shadow: var(--sombra-s); transform: translateY(-2px); }
 
-.noticia-card img { aspect-ratio: 16/9; object-fit: cover; width: 100%; display: block; }
-
-.noticia-card--destacada h3 { font-size: var(--tamano-h3); font-weight: var(--peso-titulo-medio); }
+/* Imagen a ancho completo y alto automático: se conserva la proporción
+   original de la foto en vez de recortarla con "object-fit: cover" + una
+   altura fija. Si las fotos vienen con proporciones distintas, el borde
+   superior de las tarjetas puede quedar con alturas levemente distintas
+   — preferible a perder caras, texto o partes importantes de la imagen.
+   "max-height" + "object-fit: contain" es solo un tope para fotos
+   extremadamente verticales: nunca recorta, en el peor caso deja una
+   franja de color de fondo arriba/abajo de la imagen. */
+.noticia-card img {
+  width: 100%;
+  height: auto;
+  max-height: 320px;
+  object-fit: contain;
+  background: var(--color-violeta-50);
+  display: block;
+}
 
 .noticia-card__contenido {
-  padding: var(--space-3) var(--space-4);
+  padding: var(--space-4);
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
-}
-.noticia-card__fecha { font-size: 0.85rem; color: var(--color-texto-suave); text-transform: uppercase; letter-spacing: 0.04em; }
-/* La descripción no forma parte de esta composición editorial compacta
-   (destacada y secundarias muestran solo título, fecha y botón) — el dato
-   sigue viniendo de Supabase igual que siempre, solo no se pinta acá, así
-   que no se toca ni la consulta ni "noticias.js". */
-.noticia-card__contenido p { display: none; }
-/* Botón inmediatamente después de la fecha, con el espaciado normal del
-   "gap" del contenedor — nada de "margin-top: auto" empujándolo al fondo
-   de una card estirada artificialmente. */
-.noticia-card__cta { align-self: flex-start; }
-
-/* Secundarias: filas horizontales (imagen ancha reconocible + texto) en
-   vez de una tira vertical angosta — leen como una lista editorial
-   continua, no como bloques independientes flotando con aire de más. */
-.noticias__grid-secundaria {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
-  /* En desktop (ver media query de abajo) esta columna se estira a la
-     misma altura que la destacada; repartida en dos filas iguales, así
-     la altura combinada de ambas secundarias queda igual a la altura
-     total de la destacada, en vez de quedar corta con aire libre abajo
-     de la columna. En mobile/tablet (columna única) esto no aplica: cada
-     card mide solo lo que su propio contenido necesita. */
-  height: 100%;
+  flex: 1;
 }
 
-.noticias__grid-secundaria .noticia-card {
-  flex-direction: row;
-  align-items: stretch;
-  min-height: 7.5rem;
-  flex: 1 1 0;
-}
-.noticias__grid-secundaria .noticia-card img {
-  /* ~40% del ancho de la tarjeta: suficiente para que la imagen se
-     entienda, nunca una tira. Se anula el aspect-ratio 16/9 de la regla
-     base a propósito: acá el alto no depende de la relación de aspecto
-     original de la foto (que en Supabase puede venir con cualquier
-     proporción) sino que se fija en "100%" de la fila -- la altura real
-     que define el texto -- y "object-fit: cover" recorta sin deformar,
-     sea cual sea esa altura o la proporción de la foto original. */
-  width: 40%;
-  flex: 0 0 40%;
-  height: 100%;
-  align-self: stretch;
-  flex-shrink: 0;
-}
-.noticias__grid-secundaria .noticia-card__contenido {
-  padding: var(--space-3);
-  gap: 0.35rem;
-  justify-content: center;
-}
-.noticias__grid-secundaria .noticia-card h3 {
-  font-size: 1rem;
+.noticia-card h3 {
+  font-size: 1.05rem;
   font-weight: var(--peso-titulo-medio);
-  line-height: 1.3;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  line-height: 1.35;
+  /* Sin truncado: el título se lee completo, ocupe 2 o 3 líneas. */
 }
 
-@media (min-width: 1000px) {
-  /* Grilla única: destacada a la izquierda (~56%), lista de secundarias a
-     la derecha (~44%). La columna derecha se estira (stretch) a la altura
-     de la destacada, pero repartida en dos filas iguales (flex:1 en cada
-     card de .noticias__grid-secundaria) con la imagen a "height:100%" +
-     "object-fit:cover": el espacio extra se llena con más foto visible,
-     nunca con una card vacía ni con el botón despegado del contenido. */
-  .noticias__bento { grid-template-columns: 1.3fr 1fr; align-items: stretch; }
+.noticia-card__fecha { font-size: 0.85rem; color: var(--color-texto-suave); text-transform: uppercase; letter-spacing: 0.04em; }
+/* La descripción no forma parte de esta composición compacta (cada card
+   muestra solo imagen, título, fecha y botón) — el dato sigue viniendo
+   de data/*.json igual que siempre, solo no se pinta acá, así que no se
+   toca ni la consulta ni "noticias.js". */
+.noticia-card__contenido p { display: none; }
+
+/* Botón discreto: más chico y con menos peso que un CTA principal, y
+   pegado al fondo de la card para que todas las tarjetas de una fila
+   terminen alineadas aunque el título ocupe distinta cantidad de líneas. */
+.noticia-card__cta {
+  align-self: flex-start;
+  margin-top: auto;
+  padding: 0.5rem 1.1rem;
+  font-size: 0.85rem;
 }
 
 /* =====================================================================
@@ -1355,9 +1327,8 @@ textarea:focus-visible,
 
   /* Tarjetas y bloques: radios, paddings y separaciones más discretos,
      sin perder legibilidad — nunca tarjetas "gigantes" con poco texto. */
-  .noticias__bento { gap: var(--space-3); margin-top: var(--space-5); }
+  .noticias-grid { gap: var(--space-3); margin-top: var(--space-5); }
   .noticia-card__contenido { padding: var(--space-3); gap: 0.4rem; }
-  .noticias__grid-secundaria .noticia-card { min-height: 6rem; }
 
   .materiales { padding: var(--space-5) var(--space-4); gap: var(--space-3); border-radius: var(--radio-m); }
 
