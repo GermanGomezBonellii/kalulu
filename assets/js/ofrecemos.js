@@ -7,7 +7,7 @@
     'use strict';
 
     var FALLBACK = [
-        { titulo: 'Cuadernillos y materiales', descripcion: 'Cuadernillos y materiales para todos tus alumnos.', imagen_url: 'imagenes/imagen%20(12).jpg' },
+        { titulo: 'Cuadernillos y materiales', descripcion: 'Cuadernillos y materiales para todos tus alumnos.', imagen_url: 'imagenes/imagen%20(12).jpg?v=2' },
         { titulo: 'Juegos de lectura', descripcion: 'Juegos de cartas para reforzar habilidades de lectura de forma divertida.', imagen_url: 'imagenes/imagen%20(4).jpg' },
         { titulo: 'Guía pedagógica', descripcion: 'Guía pedagógica detallada para acompañar cada paso del proceso.', imagen_url: 'imagenes/imagen%20(5).jpg' },
         { titulo: 'Cursos online', descripcion: 'Acceso completo a cursos online asincrónicos y capacitaciones.', imagen_url: 'imagenes/imagen%20(6).jpg' },
