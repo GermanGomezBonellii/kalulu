@@ -1464,3 +1464,6 @@ textarea:focus-visible,
   .ciencia-investigacion__linea-liviana { font-size: 1.3rem; }
   .ciencia-investigacion__linea-fuerte { font-size: 1.4rem; }
 }
+
+/* Red de seguridad: textos cargados desde el panel nunca desbordan su contenedor. */
+h1, h2, h3, h4, p, li, summary { overflow-wrap: anywhere; }
