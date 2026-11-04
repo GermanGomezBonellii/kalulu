@@ -6,7 +6,7 @@
     'use strict';
 
     var API = 'https://api.github.com';
-    var DEFAULT_REPO = { owner: 'GermanGomezBonellii', repo: 'kalulu', branch: 'main' };
+    var DEFAULT_REPO = { owner: 'alanallende', repo: 'kalulu', branch: 'main' };
 
     // ---------- Definición de secciones ----------
     // t (tipo): text | textarea | url | date | time | bool | image | file
