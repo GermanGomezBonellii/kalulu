@@ -62,5 +62,13 @@
     "imagen_url": "imagenes/marie.jpg",
     "orden": 80,
     "publicada": true
+  },
+  {
+    "nombre": "Germán Gómez Bonelli",
+    "descripcion": "Investigación y comunicación",
+    "imagen_url": "imagenes/uploads/foto-mw2gxxnp.jpg",
+    "publicada": true,
+    "orden": 90,
+    "id": 9
   }
 ]
