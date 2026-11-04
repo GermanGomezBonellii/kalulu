@@ -8,8 +8,8 @@
       "titulo": "Cuadernillo 1",
       "descripcion": null,
       "categoria": "cuadernillos",
-      "archivo_path": "materiales/Argentina-Cuadernillo-1 (3).pdf",
-      "nombre_archivo": "Argentina-Cuadernillo-1 (3).pdf",
+      "archivo_path": "materiales/Kalulu-Cuadernillo-1.pdf",
+      "nombre_archivo": "Kalulu-Cuadernillo-1.pdf",
       "publicado": true,
       "orden": 10
     },
@@ -18,8 +18,8 @@
       "titulo": "Cuadernillo 2",
       "descripcion": null,
       "categoria": "cuadernillos",
-      "archivo_path": "materiales/Argentina-Cuadernillo-2 (2).pdf",
-      "nombre_archivo": "Argentina-Cuadernillo-2 (2).pdf",
+      "archivo_path": "materiales/Kalulu-Cuadernillo-2.pdf",
+      "nombre_archivo": "Kalulu-Cuadernillo-2.pdf",
       "publicado": true,
       "orden": 20
     },
@@ -28,8 +28,8 @@
       "titulo": "Cuadernillo 3",
       "descripcion": null,
       "categoria": "cuadernillos",
-      "archivo_path": "materiales/Argentina-Cuadernillo-3 (1).pdf",
-      "nombre_archivo": "Argentina-Cuadernillo-3 (1).pdf",
+      "archivo_path": "materiales/Kalulu-Cuadernillo-3.pdf",
+      "nombre_archivo": "Kalulu-Cuadernillo-3.pdf",
       "publicado": true,
       "orden": 30
     },
@@ -38,8 +38,8 @@
       "titulo": "Cuadernillo 1 — impresión",
       "descripcion": null,
       "categoria": "impresion",
-      "archivo_path": "materiales/Argentina-Cuadernillo-1_Impresion.pdf",
-      "nombre_archivo": "Argentina-Cuadernillo-1_Impresion.pdf",
+      "archivo_path": "materiales/Kalulu-Cuadernillo-1-Impresion.pdf",
+      "nombre_archivo": "Kalulu-Cuadernillo-1-Impresion.pdf",
       "publicado": true,
       "orden": 40
     },
@@ -48,8 +48,8 @@
       "titulo": "Cuadernillo 2 — impresión",
       "descripcion": null,
       "categoria": "impresion",
-      "archivo_path": "materiales/Argentina-Cuadernillo-2_Impresion.pdf",
-      "nombre_archivo": "Argentina-Cuadernillo-2_Impresion.pdf",
+      "archivo_path": "materiales/Kalulu-Cuadernillo-2-Impresion.pdf",
+      "nombre_archivo": "Kalulu-Cuadernillo-2-Impresion.pdf",
       "publicado": true,
       "orden": 50
     },
@@ -58,8 +58,8 @@
       "titulo": "Cuadernillo 3 — impresión",
       "descripcion": null,
       "categoria": "impresion",
-      "archivo_path": "materiales/Argentina-Cuadernillo-3_Impresion.pdf",
-      "nombre_archivo": "Argentina-Cuadernillo-3_Impresion.pdf",
+      "archivo_path": "materiales/Kalulu-Cuadernillo-3-Impresion.pdf",
+      "nombre_archivo": "Kalulu-Cuadernillo-3-Impresion.pdf",
       "publicado": true,
       "orden": 60
     },
@@ -68,8 +68,8 @@
       "titulo": "Guía pedagógica",
       "descripcion": null,
       "categoria": "guias",
-      "archivo_path": "materiales/Argentina-Guia_pedagogica (1).pdf",
-      "nombre_archivo": "Argentina-Guia_pedagogica (1).pdf",
+      "archivo_path": "materiales/Kalulu-Guia-pedagogica.pdf",
+      "nombre_archivo": "Kalulu-Guia-pedagogica.pdf",
       "publicado": true,
       "orden": 70
     },
@@ -78,8 +78,8 @@
       "titulo": "Bingo",
       "descripcion": null,
       "categoria": "juegos",
-      "archivo_path": "materiales/juego-arg-bingo (1).pdf",
-      "nombre_archivo": "juego-arg-bingo (1).pdf",
+      "archivo_path": "materiales/Kalulu-Juego-Bingo.pdf",
+      "nombre_archivo": "Kalulu-Juego-Bingo.pdf",
       "publicado": true,
       "orden": 80
     },
@@ -88,8 +88,8 @@
       "titulo": "Revueltos",
       "descripcion": null,
       "categoria": "juegos",
-      "archivo_path": "materiales/juego-arg-revueltos (1).pdf",
-      "nombre_archivo": "juego-arg-revueltos (1).pdf",
+      "archivo_path": "materiales/Kalulu-Juego-Revueltos.pdf",
+      "nombre_archivo": "Kalulu-Juego-Revueltos.pdf",
       "publicado": true,
       "orden": 90
     }

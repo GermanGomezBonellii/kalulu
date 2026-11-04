@@ -374,9 +374,10 @@ textarea:focus-visible,
 
 .hero__titulo {
   color: var(--color-blanco);
+  font-weight: var(--peso-titulo-fuerte);
   overflow-wrap: break-word;
 }
-.hero__titulo strong { color: #d9ceff; }
+.hero__titulo strong { color: #d9ceff; font-weight: var(--peso-titulo-fuerte); }
 
 .hero__subtitulo {
   margin-top: var(--space-4);
@@ -1209,7 +1210,7 @@ textarea:focus-visible,
    el ancho + "align-self: flex-start" elimina ese estiramiento y evita que
    dependamos de que el navegador respete el aspect-ratio intrínseco. */
 .site-footer__marca img {
-  width: 150px;
+  width: 190px;
   height: auto;
   align-self: flex-start;
 }
