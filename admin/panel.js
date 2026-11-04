@@ -53,6 +53,7 @@
           nota: 'Preguntas abiertas que se muestran en la sección de ciencia ciudadana.',
           campos: [
             { k: 'pregunta', l: 'Pregunta', t: 'textarea', req: true },
+            { k: 'descripcion', l: 'Descripción (se muestra al hacer clic en la pregunta; dejala vacía si no querés que se expanda)', t: 'textarea' },
             { k: 'publicada', l: 'Publicada', t: 'bool', def: true }
           ] },
         { id: 'equipo', label: 'Quiénes somos', archivo: 'equipo', modo: 'lista', titulo: 'nombre', orden: { k: 'orden' }, publ: 'publicada', mover: true,

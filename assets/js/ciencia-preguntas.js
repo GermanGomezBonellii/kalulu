@@ -20,21 +20,39 @@
         return n;
     }
 
+    // Si la pregunta trae "descripcion", la tarjeta se expande al hacer clic
+    // (<details>, accesible con teclado y sin JS extra). Sin descripcion,
+    // queda como tarjeta fija.
     function crearPregunta(item, indice, total) {
-        var div = document.createElement('div');
-        div.className = 'ciencia-preguntas__tarjeta';
+        var tieneDetalle = !!(item.descripcion && String(item.descripcion).trim());
+        var div = document.createElement(tieneDetalle ? 'details' : 'div');
+        div.className = 'ciencia-preguntas__tarjeta' + (tieneDetalle ? ' ciencia-preguntas__tarjeta--expandible' : '');
+
+        var cabecera = document.createElement(tieneDetalle ? 'summary' : 'div');
+        cabecera.className = 'ciencia-preguntas__cabecera';
 
         var numero = document.createElement('span');
         numero.className = 'ciencia-preguntas__tarjeta-num';
         numero.setAttribute('aria-hidden', 'true');
         numero.textContent = numeroFormateado(indice, total);
-        div.appendChild(numero);
+        cabecera.appendChild(numero);
 
         var texto = document.createElement('p');
         texto.className = 'ciencia-preguntas__tarjeta-texto';
         texto.textContent = item.pregunta || '';
-        div.appendChild(texto);
+        cabecera.appendChild(texto);
+        div.appendChild(cabecera);
 
+        if (tieneDetalle) {
+            var detalle = document.createElement('div');
+            detalle.className = 'ciencia-preguntas__detalle';
+            String(item.descripcion).split(/\n{2,}/).forEach(function (parrafo) {
+                var p = document.createElement('p');
+                p.textContent = parrafo.trim();
+                if (p.textContent) detalle.appendChild(p);
+            });
+            div.appendChild(detalle);
+        }
         return div;
     }
 
@@ -58,7 +76,7 @@
         try {
             var resp = await client
                 .from('preguntas_ciencia_ciudadana')
-                .select('id, pregunta, orden')
+                .select('id, pregunta, descripcion, orden')
                 .eq('publicada', true)
                 .order('orden', { ascending: true });
 
