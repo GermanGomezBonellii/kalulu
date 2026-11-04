@@ -1047,6 +1047,10 @@ textarea:focus-visible,
   line-height: 1.65;
 }
 .ciencia-preguntas__detalle p { margin: 0 0 var(--space-3); }
+/* El texto nunca debe salirse de la tarjeta, aunque sea una palabra larguísima. */
+.ciencia-preguntas__grid > * { min-width: 0; }
+.ciencia-preguntas__tarjeta { min-width: 0; overflow-wrap: anywhere; word-break: break-word; }
+.ciencia-preguntas__detalle, .ciencia-preguntas__detalle p, .ciencia-preguntas__tarjeta-texto { overflow-wrap: anywhere; word-break: break-word; }
 .ciencia-preguntas__detalle p:last-child { margin-bottom: 0; }
 
 /* --- 10b. Cómo investigamos juntos (violeta institucional, full-bleed) --
