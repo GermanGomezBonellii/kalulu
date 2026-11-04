@@ -67,7 +67,21 @@
         var icono = document.createElement('div');
         icono.className = 'material-card__icono';
         icono.setAttribute('aria-hidden', 'true');
-        icono.textContent = iconoParaCategoria(material.categoria);
+        if (material.icono) {
+            // Ícono propio del material (SVG o imagen); si falla, queda el emoji.
+            icono.classList.add('material-card__icono--img');
+            var imgIcono = document.createElement('img');
+            imgIcono.src = material.icono;
+            imgIcono.alt = '';
+            imgIcono.loading = 'lazy';
+            imgIcono.addEventListener('error', function () {
+                icono.classList.remove('material-card__icono--img');
+                icono.textContent = iconoParaCategoria(material.categoria);
+            });
+            icono.appendChild(imgIcono);
+        } else {
+            icono.textContent = iconoParaCategoria(material.categoria);
+        }
         article.appendChild(icono);
 
         var cuerpo = document.createElement('div');
@@ -201,7 +215,7 @@
         try {
             var resp = await client
                 .from('materiales')
-                .select('id, titulo, descripcion, categoria, archivo_path, nombre_archivo, orden')
+                .select('id, titulo, descripcion, categoria, icono, archivo_path, nombre_archivo, orden')
                 .eq('publicado', true)
                 .order('categoria', { ascending: true })
                 .order('orden', { ascending: true });
@@ -220,10 +234,16 @@
                     var urlPublica = client.storage.from(BUCKET_NAME).getPublicUrl(fila.archivo_path);
                     url = urlPublica && urlPublica.data ? urlPublica.data.publicUrl : null;
                 }
+                var iconoUrl = null;
+                if (fila.icono) {
+                    var ic = client.storage.from(BUCKET_NAME).getPublicUrl(fila.icono);
+                    iconoUrl = ic && ic.data ? ic.data.publicUrl : null;
+                }
                 return {
                     titulo: fila.titulo,
                     descripcion: fila.descripcion,
                     categoria: fila.categoria,
+                    icono: iconoUrl,
                     disponible: !!url,
                     url: url,
                     nombre_archivo: fila.nombre_archivo

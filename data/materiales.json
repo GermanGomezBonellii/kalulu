@@ -11,7 +11,8 @@
       "archivo_path": "materiales/Kalulu-Cuadernillo-1.pdf",
       "nombre_archivo": "Kalulu-Cuadernillo-1.pdf",
       "publicado": true,
-      "orden": 10
+      "orden": 10,
+      "icono": "imagenes/iconos/cuadernillo-1.svg"
     },
     {
       "id": 2,
@@ -21,7 +22,8 @@
       "archivo_path": "materiales/Kalulu-Cuadernillo-2.pdf",
       "nombre_archivo": "Kalulu-Cuadernillo-2.pdf",
       "publicado": true,
-      "orden": 20
+      "orden": 20,
+      "icono": "imagenes/iconos/cuadernillo-2.svg"
     },
     {
       "id": 3,
@@ -31,7 +33,8 @@
       "archivo_path": "materiales/Kalulu-Cuadernillo-3.pdf",
       "nombre_archivo": "Kalulu-Cuadernillo-3.pdf",
       "publicado": true,
-      "orden": 30
+      "orden": 30,
+      "icono": "imagenes/iconos/cuadernillo-3.svg"
     },
     {
       "id": 4,
@@ -41,7 +44,8 @@
       "archivo_path": "materiales/Kalulu-Cuadernillo-1-Impresion.pdf",
       "nombre_archivo": "Kalulu-Cuadernillo-1-Impresion.pdf",
       "publicado": true,
-      "orden": 40
+      "orden": 40,
+      "icono": "imagenes/iconos/cuadernillo-1.svg"
     },
     {
       "id": 5,
@@ -51,7 +55,8 @@
       "archivo_path": "materiales/Kalulu-Cuadernillo-2-Impresion.pdf",
       "nombre_archivo": "Kalulu-Cuadernillo-2-Impresion.pdf",
       "publicado": true,
-      "orden": 50
+      "orden": 50,
+      "icono": "imagenes/iconos/cuadernillo-2.svg"
     },
     {
       "id": 6,
@@ -61,7 +66,8 @@
       "archivo_path": "materiales/Kalulu-Cuadernillo-3-Impresion.pdf",
       "nombre_archivo": "Kalulu-Cuadernillo-3-Impresion.pdf",
       "publicado": true,
-      "orden": 60
+      "orden": 60,
+      "icono": "imagenes/iconos/cuadernillo-3.svg"
     },
     {
       "id": 7,
@@ -71,7 +77,8 @@
       "archivo_path": "materiales/Kalulu-Guia-pedagogica.pdf",
       "nombre_archivo": "Kalulu-Guia-pedagogica.pdf",
       "publicado": true,
-      "orden": 70
+      "orden": 70,
+      "icono": "imagenes/iconos/guia-pedagogica.svg"
     },
     {
       "id": 8,
@@ -81,7 +88,8 @@
       "archivo_path": "materiales/Kalulu-Juego-Bingo.pdf",
       "nombre_archivo": "Kalulu-Juego-Bingo.pdf",
       "publicado": true,
-      "orden": 80
+      "orden": 80,
+      "icono": "imagenes/iconos/juego-bingo.svg"
     },
     {
       "id": 9,
@@ -91,7 +99,8 @@
       "archivo_path": "materiales/Kalulu-Juego-Revueltos.pdf",
       "nombre_archivo": "Kalulu-Juego-Revueltos.pdf",
       "publicado": true,
-      "orden": 90
+      "orden": 90,
+      "icono": "imagenes/iconos/juego-revueltos.svg"
     }
   ]
 }

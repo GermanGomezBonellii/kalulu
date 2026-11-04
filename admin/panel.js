@@ -68,7 +68,8 @@
           campos: [
             { k: 'titulo', l: 'Título', t: 'text', req: true },
             { k: 'descripcion', l: 'Descripción', t: 'textarea' },
-            { k: 'categoria', l: 'Categoría', t: 'text' },
+            { k: 'categoria', l: 'Categoría (cuadernillos, impresion, guias o juegos)', t: 'text' },
+            { k: 'icono', l: 'Ícono (SVG o imagen, opcional)', t: 'image' },
             { k: 'archivo_path', l: 'Archivo', t: 'file', nombre: 'nombre_archivo' },
             { k: 'publicado', l: 'Publicado', t: 'bool', def: true }
           ] },
