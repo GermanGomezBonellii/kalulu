@@ -308,7 +308,7 @@ textarea:focus-visible,
 /* Logo ~100% más grande que la primera versión (42px -> 84px), con el
    header creciendo lo justo (--header-alto 76px -> 88px) para que quede
    equilibrado en vez de un logo enorme apretado en una franja angosta. */
-.site-header__logo img { height: 62px; width: auto; }
+.site-header__logo img { height: 56px; width: auto; }
 
 .site-header__acciones {
   display: flex;
@@ -1444,7 +1444,7 @@ textarea:focus-visible,
   .label-desktop { display: none; }
   .label-mobile { display: inline; }
 
-  .site-header__logo img { height: 38px; }
+  .site-header__logo img { height: 32px; }
   .site-header__acciones { gap: var(--space-2); }
   .site-header__youtube {
     font-size: 0.85rem;
